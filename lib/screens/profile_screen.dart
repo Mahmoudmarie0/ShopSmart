@@ -6,6 +6,7 @@ import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
 import '../controller/main_controller.dart';
+import '../widgets/app_name_text.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -16,8 +17,11 @@ class ProfileScreen extends StatelessWidget {
       init: MainController(),
       builder: (controller) => Scaffold(
           appBar: AppBar(
-            title: const Text('Profile Screen'),
-            leading: Image.asset(AssetsPaths.shoppingCart),
+            title: const AppNameTextWidgets(fontSize: 20,),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(AssetsPaths.shoppingCart),
+            ),
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
