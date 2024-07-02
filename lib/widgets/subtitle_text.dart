@@ -8,7 +8,7 @@ final FontWeight ? fontWeight;
 final Color ? color;
 final TextDecoration ? textDecoration;
 final FontStyle  fontStyle;
-final TextDecoration  textDecorations;
+final TextDecoration ? textDecorations;
   @override
   Widget build(BuildContext context) {
     return  Text(
