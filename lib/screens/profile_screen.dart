@@ -23,104 +23,106 @@ class ProfileScreen extends StatelessWidget {
               child: Image.asset(AssetsPaths.shoppingCart),
             ),
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Visibility(
-                visible: false,
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: TitleTextWidget(
-                      label: "Please login to have ultimate access"),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Visibility(
+                  visible: false,
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: TitleTextWidget(
+                        label: "Please login to have ultimate access"),
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: [
-                    Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Theme.of(context).cardColor,
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.surface,
-                              width: 3),
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
-                            ),
-                            fit: BoxFit.fill,
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 7,
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TitleTextWidget(label: "Mahmoud Marie"),
-                        SubtitleTextWidget(
-                          label: "mahmoudmarie500@gmail.com",
-                          textDecorations: TextDecoration.none,
-                        ),
-                      ],
-                    ),
-                  ],
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TitleTextWidget(label: "General"),
-                    ListTileWidget(
-                        imagePath: AssetsPaths.orderSvg,
-                        text: "All Orders",
-                        function: () {}),
-                    ListTileWidget(
-                        imagePath: AssetsPaths.wishlistSvg,
-                        text: "Wishlist",
-                        function: () {}),
-                    ListTileWidget(
-                        imagePath: AssetsPaths.recent,
-                        text: "Viewed recently",
-                        function: () {}),
-                    ListTileWidget(
-                        imagePath: AssetsPaths.address,
-                        text: "Address",
-                        function: () {}),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                    const TitleTextWidget(label: "Settings"),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    SwitchListTile(
-                      secondary:Image.asset(AssetsPaths.theme,height: 30,),
-                        title: controller.getIsDarkTheme
-                            ? const Text('Dark mode')
-                            : const Text('Light mode'),
-                        value: controller.getIsDarkTheme,
-                        onChanged: (value) {
-                          controller.setDarkTheme(themeValue: value);
-                        }),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).cardColor,
+                            border: Border.all(
+                                color: Theme.of(context).colorScheme.surface,
+                                width: 3),
+                            image: const DecorationImage(
+                              image: NetworkImage(
+                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+                              ),
+                              fit: BoxFit.fill,
+                            )),
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TitleTextWidget(label: "Mahmoud Marie"),
+                          SubtitleTextWidget(
+                            label: "mahmoudmarie500@gmail.com",
+                            textDecorations: TextDecoration.none,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Center(child: ElevatedButton.icon(onPressed: (){}, label: const Text('Login',style: TextStyle(color: Colors.white), ),icon:const Icon(Icons.login,color: Colors.white,),style: ElevatedButton.styleFrom( backgroundColor: Colors.blue), ))
-              
-            ],
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const TitleTextWidget(label: "General"),
+                      ListTileWidget(
+                          imagePath: AssetsPaths.orderSvg,
+                          text: "All Orders",
+                          function: () {}),
+                      ListTileWidget(
+                          imagePath: AssetsPaths.wishlistSvg,
+                          text: "Wishlist",
+                          function: () {}),
+                      ListTileWidget(
+                          imagePath: AssetsPaths.recent,
+                          text: "Viewed recently",
+                          function: () {}),
+                      ListTileWidget(
+                          imagePath: AssetsPaths.address,
+                          text: "Address",
+                          function: () {}),
+                      const Divider(
+                        thickness: 1,
+                      ),
+                      const TitleTextWidget(label: "Settings"),
+                      const SizedBox(
+                        height: 7,
+                      ),
+                      SwitchListTile(
+                        secondary:Image.asset(AssetsPaths.theme,height: 30,),
+                          title: controller.getIsDarkTheme
+                              ? const Text('Dark mode')
+                              : const Text('Light mode'),
+                          value: controller.getIsDarkTheme,
+                          onChanged: (value) {
+                            controller.setDarkTheme(themeValue: value);
+                          }),
+                      const Divider(
+                        thickness: 1,
+                      ),
+                    ],
+                  ),
+                ),
+                Center(child: ElevatedButton.icon(onPressed: (){}, label: const Text('Login',style: TextStyle(color: Colors.white), ),icon:const Icon(Icons.login,color: Colors.white,),style: ElevatedButton.styleFrom( backgroundColor: Colors.blue), ))
+                
+              ],
+            ),
           )),
     );
   }
