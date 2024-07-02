@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:iconly/iconly.dart';
 import 'package:shop_smart/controller/root_controller.dart';
 
 class RootScreen extends StatefulWidget {
@@ -22,13 +23,31 @@ class _RootScreenState extends State<RootScreen> {
       ),
 
       bottomNavigationBar:NavigationBar(
+        selectedIndex: rootController.currentScreen,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 2,
+        height: kBottomNavigationBarHeight,
         onDestinationSelected: (index){
           setState(() {
             rootController.currentScreen = index;
           });
            rootController.controller.jumpToPage(index);
           // print(rootController.currentScreen);
-        }, destinations: [],
+        }, destinations:const [
+
+          NavigationDestination(
+              selectedIcon: Icon(IconlyBold.home),
+              icon: Icon(IconlyLight.home), label: "Home"),
+          NavigationDestination(icon: Icon(IconlyLight.search), label: "Search",
+              selectedIcon: Icon(IconlyBold.search),
+      ),
+          NavigationDestination(icon: Icon(IconlyLight.bag_2), label: "Cart",
+            selectedIcon: Icon(IconlyBold.bag_2),
+          ),
+          NavigationDestination(icon: Icon(IconlyLight.profile), label: "Profile",
+            selectedIcon: Icon(IconlyBold.profile),
+          ),
+      ],
 
       ) ,
 

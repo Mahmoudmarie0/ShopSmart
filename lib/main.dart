@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shop_smart/consts/theme_data.dart';
 import 'package:shop_smart/controller/main_controller.dart';
 import 'package:shop_smart/controller/my_bindings.dart';
 import 'package:shop_smart/root_screen.dart';
 
-import 'screens/home_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
