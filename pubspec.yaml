@@ -39,6 +39,8 @@ dependencies:
   shared_preferences: ^2.2.3
   iconly: ^1.0.1
   shimmer: ^3.0.0
+  fancy_shimmer_image: ^2.0.3
+  flutter_cache_manager: ^3.3.0
 
 dev_dependencies:
   flutter_test:
