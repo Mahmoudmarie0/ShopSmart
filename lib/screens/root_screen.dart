@@ -4,6 +4,7 @@ import 'package:get/get_instance/get_instance.dart';
 import 'package:iconly/iconly.dart';
 import 'package:shop_smart/controller/root_controller.dart';
 
+
 class RootScreen extends StatefulWidget {
   const RootScreen({super.key});
 
@@ -41,7 +42,11 @@ class _RootScreenState extends State<RootScreen> {
           NavigationDestination(icon: Icon(IconlyLight.search), label: "Search",
               selectedIcon: Icon(IconlyBold.search),
       ),
-          NavigationDestination(icon: Icon(IconlyLight.bag_2), label: "Cart",
+          NavigationDestination(
+            icon: Badge(
+                label: Text("6"),
+                child: Icon(IconlyLight.bag_2)),
+            label: "Cart",
             selectedIcon: Icon(IconlyBold.bag_2),
           ),
           NavigationDestination(icon: Icon(IconlyLight.profile), label: "Profile",

@@ -4,6 +4,8 @@ import 'package:iconly/iconly.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
+import 'quantity_btm_sheet.dart';
+
 class CartWidget extends StatelessWidget {
   const CartWidget({super.key});
 
@@ -73,7 +75,17 @@ class CartWidget extends StatelessWidget {
                                 color: Colors.blue,
                               )
                             ),
-                           onPressed: (){},
+                           onPressed: ()async {
+                              await showModalBottomSheet(
+                                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                                  shape:const RoundedRectangleBorder( borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16))),
+                                  context: context,
+                                  builder:(context) {
+                                    return const QuantityBtmSheet();
+                                  }
+                              );
+
+                           },
                            icon:const  Icon(IconlyLight.arrow_down_2,color: Colors.blue,) ,
                            label:const Text("Qty:6",style: TextStyle(color: Colors.blue),) ,
 
