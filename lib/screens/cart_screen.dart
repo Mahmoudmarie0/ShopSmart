@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_smart/consts/assets.dart';
+import 'package:shop_smart/screens/button_checkout.dart';
 import 'package:shop_smart/widgets/empty_bag.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 import '../widgets/cart_widget.dart';
@@ -19,6 +20,7 @@ class CartScreen extends StatelessWidget {
             buttonText: 'Shop now',
           ))
         : Scaffold(
+      bottomSheet:const CartButtonCheckout(),
             appBar: AppBar(
               title: const TitleTextWidget(
                 label: "Cart (5)",
