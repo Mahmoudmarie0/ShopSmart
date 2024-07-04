@@ -2,8 +2,10 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/controller/controller.dart';
+import 'package:shop_smart/widgets/title_text.dart';
 import '../consts/assets.dart';
 import '../widgets/app_name_text.dart';
+import '../widgets/latest_arrival_widget.dart';
 
 
 class HomeScreen extends StatelessWidget {
@@ -27,6 +29,7 @@ class HomeScreen extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   height: size.height * 0.24,
@@ -52,6 +55,27 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 18,),
+                const TitleTextWidget(label: "Latest Arrival",fontSize: 22, ),
+                const SizedBox(height: 18,),
+                SizedBox(
+                  height:size.height * 0.2,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 10,
+                      itemBuilder: (context, index) {
+
+                        return const LatestArrivalProductWidget();
+                      }
+
+
+
+                  ),
+
+
+
+                ),
+
               ],
             ),
           )),
