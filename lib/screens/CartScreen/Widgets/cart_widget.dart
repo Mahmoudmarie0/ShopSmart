@@ -51,44 +51,52 @@ class CartWidget extends StatelessWidget {
                                   Icons.clear,
                                   color: Colors.red,
                                 )),
-                          const HeartButtonWidget(),
+                            const HeartButtonWidget(),
                           ],
                         ),
-
                       ],
                     ),
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                       const SubtitleTextWidget(label: "16\$", textDecorations: TextDecoration.none,fontSize: 20,color: Colors.blue,),
-                          OutlinedButton.icon(
-                            style: OutlinedButton.styleFrom(
+                        const SubtitleTextWidget(
+                          label: "16\$",
+                          textDecorations: TextDecoration.none,
+                          fontSize: 20,
+                          color: Colors.blue,
+                        ),
+                        OutlinedButton.icon(
+                          style: OutlinedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              side:const BorderSide(
+                              side: const BorderSide(
                                 width: 2,
                                 color: Colors.blue,
-                              )
-                            ),
-                           onPressed: ()async {
-                              await showModalBottomSheet(
-                                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                                  shape:const RoundedRectangleBorder( borderRadius: BorderRadius.only(topLeft: Radius.circular(16),topRight: Radius.circular(16))),
-                                  context: context,
-                                  builder:(context) {
-                                    return const QuantityBtmSheet();
-                                  }
-                              );
-
-                           },
-                           icon:const  Icon(IconlyLight.arrow_down_2,color: Colors.blue,) ,
-                           label:const Text("Qty:6",style: TextStyle(color: Colors.blue),) ,
-
-                         )
-
+                              )),
+                          onPressed: () async {
+                            await showModalBottomSheet(
+                                backgroundColor:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(16),
+                                        topRight: Radius.circular(16))),
+                                context: context,
+                                builder: (context) {
+                                  return const QuantityBtmSheet();
+                                });
+                          },
+                          icon: const Icon(
+                            IconlyLight.arrow_down_2,
+                            color: Colors.blue,
+                          ),
+                          label: const Text(
+                            "Qty:6",
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        )
                       ],
-
                     )
                   ],
                 ),

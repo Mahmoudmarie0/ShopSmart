@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 
@@ -19,26 +18,29 @@ class QuantityBtmSheet extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-         const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Expanded(
             child: ListView.builder(
-              // shrinkWrap: true,
-              // physics:const  NeverScrollableScrollPhysics(),
-              itemCount: 30,
+                // shrinkWrap: true,
+                // physics:const  NeverScrollableScrollPhysics(),
+                itemCount: 30,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: (){
-                   //  print(index);
+                    onTap: () {
+                      //  print(index);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
-                      child: Center(child: SubtitleTextWidget(label: "${index + 1}", textDecorations: TextDecoration.none,)),
+                      child: Center(
+                          child: SubtitleTextWidget(
+                        label: "${index + 1}",
+                        textDecorations: TextDecoration.none,
+                      )),
                     ),
                   );
-                }
-            
-            
-            ),
+                }),
           ),
         ],
       ),

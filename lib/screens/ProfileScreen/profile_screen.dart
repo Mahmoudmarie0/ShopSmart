@@ -7,6 +7,7 @@ import 'package:shop_smart/widgets/title_text.dart';
 
 import '../../controller/main_controller.dart';
 import '../../widgets/app_name_text.dart';
+import '../WishlistScreen/wishlish_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -17,7 +18,9 @@ class ProfileScreen extends StatelessWidget {
       init: MainController(),
       builder: (controller) => Scaffold(
           appBar: AppBar(
-            title: const AppNameTextWidgets(fontSize: 20,),
+            title: const AppNameTextWidgets(
+              fontSize: 20,
+            ),
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(AssetsPaths.shoppingCart),
@@ -88,7 +91,9 @@ class ProfileScreen extends StatelessWidget {
                       ListTileWidget(
                           imagePath: AssetsPaths.wishlistSvg,
                           text: "Wishlist",
-                          function: () {}),
+                          function: () {
+                            Get.to(const WishlistScreen());
+                          }),
                       ListTileWidget(
                           imagePath: AssetsPaths.recent,
                           text: "Viewed recently",
@@ -105,7 +110,10 @@ class ProfileScreen extends StatelessWidget {
                         height: 7,
                       ),
                       SwitchListTile(
-                        secondary:Image.asset(AssetsPaths.theme,height: 30,),
+                          secondary: Image.asset(
+                            AssetsPaths.theme,
+                            height: 30,
+                          ),
                           title: controller.getIsDarkTheme
                               ? const Text('Dark mode')
                               : const Text('Light mode'),
@@ -119,8 +127,19 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Center(child: ElevatedButton.icon(onPressed: (){}, label: const Text('Login',style: TextStyle(color: Colors.white), ),icon:const Icon(Icons.login,color: Colors.white,),style: ElevatedButton.styleFrom( backgroundColor: Colors.blue), ))
-                
+                Center(
+                    child: ElevatedButton.icon(
+                  onPressed: () {},
+                  label: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  icon: const Icon(
+                    Icons.login,
+                    color: Colors.white,
+                  ),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                ))
               ],
             ),
           )),

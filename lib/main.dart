@@ -5,13 +5,11 @@ import 'package:shop_smart/controller/main_controller.dart';
 import 'package:shop_smart/controller/my_bindings.dart';
 import 'package:shop_smart/screens/RootScreen/root_screen.dart';
 
-
-
 void main() {
   runApp(const MyApp());
 }
-MainController mainController = Get.put(MainController());
 
+MainController mainController = Get.put(MainController());
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -24,19 +22,17 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<MainController>(
-      init: MainController(),
-      builder: (controller) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialBinding: MyBindings(),
-          title: 'Shop Smart',
-          theme: Styles.themeData(isDarkTheme: controller.getIsDarkTheme,context:  context),
-          home:const RootScreen(),
-        );
-      }
-    );
+        init: MainController(),
+        builder: (controller) {
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialBinding: MyBindings(),
+            title: 'Shop Smart',
+            theme: Styles.themeData(
+                isDarkTheme: controller.getIsDarkTheme, context: context),
+            home: const RootScreen(),
+          );
+        });
   }
 }
-

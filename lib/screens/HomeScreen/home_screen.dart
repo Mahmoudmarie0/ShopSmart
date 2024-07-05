@@ -8,7 +8,6 @@ import '../../consts/assets.dart';
 import '../../widgets/app_name_text.dart';
 import 'Widgets/latest_arrival_widget.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -35,7 +34,6 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: size.height * 0.24,
-
                     child: ClipRRect(
                       child: Swiper(
                         itemBuilder: (BuildContext context, int index) {
@@ -46,53 +44,56 @@ class HomeScreen extends StatelessWidget {
                         },
                         autoplay: true,
                         itemCount: controller.bannersImage.length,
-                        pagination:const SwiperPagination(
+                        pagination: const SwiperPagination(
                           alignment: Alignment.bottomCenter,
                           builder: DotSwiperPaginationBuilder(
                             color: Colors.white,
                             activeColor: Colors.red,
                           ),
                         ),
-                       // control: SwiperControl(),
+                        // control: SwiperControl(),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 18,),
-                  const TitleTextWidget(label: "Latest Arrival",fontSize: 22, ),
-                  const SizedBox(height: 18,),
-                  SizedBox(
-                    height:size.height * 0.2,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                        itemBuilder: (context, index) {
-
-                          return const LatestArrivalProductWidget();
-                        }
-
-
-
-                    ),
-
-
-
+                  const SizedBox(
+                    height: 18,
                   ),
-                  const SizedBox(height: 18,),
-                  const TitleTextWidget(label: "Categories",fontSize: 22, ),
-                  const SizedBox(height: 18,),
+                  const TitleTextWidget(
+                    label: "Latest Arrival",
+                    fontSize: 22,
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  SizedBox(
+                    height: size.height * 0.2,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          return const LatestArrivalProductWidget();
+                        }),
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  const TitleTextWidget(
+                    label: "Categories",
+                    fontSize: 22,
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
                   GridView.count(
-                    shrinkWrap: true,
-                      physics:const  NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       crossAxisCount: 4,
-                    children: List.generate(controller.categories.length, (index) {
-                      return CategoryRoundedWidget(image: controller.categories[index].image, name: controller.categories[index].name);
-                    })
-
-
-
-
-                  )
-
+                      children:
+                          List.generate(controller.categories.length, (index) {
+                        return CategoryRoundedWidget(
+                            image: controller.categories[index].image,
+                            name: controller.categories[index].name);
+                      }))
                 ],
               ),
             ),

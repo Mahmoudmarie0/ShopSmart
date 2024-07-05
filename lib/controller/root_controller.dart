@@ -6,9 +6,10 @@ import '../screens/ProfileScreen/profile_screen.dart';
 import '../screens/SearchScreen/search_screen.dart';
 
 class RootController extends GetxController {
-  late PageController controller; // late==> init page controller  when screen open
+  late PageController
+      controller; // late==> init page controller  when screen open
   int currentScreen = 0;
-  List<Widget>screens = [
+  List<Widget> screens = [
     const HomeScreen(),
     const SearchScreen(),
     const CartScreen(),
@@ -19,8 +20,6 @@ class RootController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    controller = PageController(initialPage:currentScreen);
-
+    controller = PageController(initialPage: currentScreen);
   }
-
 }

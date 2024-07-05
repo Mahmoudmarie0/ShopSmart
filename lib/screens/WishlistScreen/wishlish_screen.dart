@@ -1,12 +1,13 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_smart/consts/assets.dart';
-import 'package:shop_smart/widgets/button_checkout.dart';
 import 'package:shop_smart/widgets/empty_bag.dart';
 import 'package:shop_smart/widgets/title_text.dart';
-import 'Widgets/cart_widget.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+import '../SearchScreen/Widgets/products_widget.dart';
+
+class WishlistScreen extends StatelessWidget {
+  const WishlistScreen({super.key});
   final bool isEmpty = false;
   @override
   Widget build(BuildContext context) {
@@ -20,10 +21,9 @@ class CartScreen extends StatelessWidget {
             buttonText: 'Shop now',
           ))
         : Scaffold(
-            bottomSheet: const CartButtonCheckout(),
             appBar: AppBar(
               title: const TitleTextWidget(
-                label: "Cart (5)",
+                label: "wishlist (5)",
               ),
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -38,11 +38,13 @@ class CartScreen extends StatelessWidget {
                     ))
               ],
             ),
-            body: ListView.builder(
-                itemCount: 15,
-                itemBuilder: (context, index) {
-                  return const CartWidget();
-                }),
+            body: DynamicHeightGridView(
+              itemCount: 220,
+              crossAxisCount: 2,
+              builder: (context, index) {
+                return const ProductWidget();
+              },
+            ),
           );
   }
 }
