@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconly/iconly.dart';
 
-import '../consts/assets.dart';
-import '../widgets/app_name_text.dart';
-import '../widgets/subtitle_text.dart';
-import '../widgets/title_text.dart';
+import '../../consts/assets.dart';
+import '../../widgets/app_name_text.dart';
+import '../../widgets/heart_btn.dart';
+import '../../widgets/subtitle_text.dart';
+import '../../widgets/title_text.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({super.key});
@@ -72,10 +73,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                      children: [
-                       Material(
-                         shape: const CircleBorder(),
-                           color: Colors.teal.shade200,
-                           child: IconButton(onPressed: (){}, icon: const Icon(IconlyLight.heart))),
+                       HeartButtonWidget(color: Colors.blue.shade300, ),
                       const SizedBox(
                          width: 10,
                        ),

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:shop_smart/consts/theme_data.dart';
 import 'package:shop_smart/controller/main_controller.dart';
 import 'package:shop_smart/controller/my_bindings.dart';
-import 'package:shop_smart/screens/root_screen.dart';
+import 'package:shop_smart/screens/RootScreen/root_screen.dart';
 
 
 

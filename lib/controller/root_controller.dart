@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
-import '../screens/home_screen.dart';
-import '../screens/cart_screen.dart';
-import '../screens/profile_screen.dart';
-import '../screens/search_screen.dart';
+import '../screens/HomeScreen/home_screen.dart';
+import '../screens/CartScreen/cart_screen.dart';
+import '../screens/ProfileScreen/profile_screen.dart';
+import '../screens/SearchScreen/search_screen.dart';
 
 class RootController extends GetxController {
   late PageController controller; // late==> init page controller  when screen open

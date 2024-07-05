@@ -2,11 +2,11 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/controller/home_controller.dart';
-import 'package:shop_smart/widgets/ctg_rounded_widget.dart';
+import 'package:shop_smart/screens/HomeScreen/Widgets/ctg_rounded_widget.dart';
 import 'package:shop_smart/widgets/title_text.dart';
-import '../consts/assets.dart';
-import '../widgets/app_name_text.dart';
-import '../widgets/latest_arrival_widget.dart';
+import '../../consts/assets.dart';
+import '../../widgets/app_name_text.dart';
+import 'Widgets/latest_arrival_widget.dart';
 
 
 class HomeScreen extends StatelessWidget {

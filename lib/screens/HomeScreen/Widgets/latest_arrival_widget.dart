@@ -6,8 +6,9 @@ import 'package:iconly/iconly.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 
 
-import '../consts/assets.dart';
-import '../screens/product_details.dart';
+import '../../../consts/assets.dart';
+import '../../../widgets/heart_btn.dart';
+import '../../ProductDetails/product_details.dart';
 
 class LatestArrivalProductWidget extends StatelessWidget {
   const LatestArrivalProductWidget({super.key});
@@ -45,7 +46,8 @@ class LatestArrivalProductWidget extends StatelessWidget {
                     FittedBox(
                       child: Row(
                         children: [
-                          IconButton(onPressed: (){}, icon:const Icon(IconlyLight.heart)),
+                          // IconButton(onPressed: (){}, icon:const Icon(IconlyLight.heart)),
+                         const HeartButtonWidget( ),
                           IconButton(onPressed: (){}, icon:const Icon(Icons.add_shopping_cart_rounded,size: 18,)),
                 
                         ],

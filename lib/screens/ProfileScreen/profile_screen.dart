@@ -5,8 +5,8 @@ import 'package:shop_smart/widgets/list_tile.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
-import '../controller/main_controller.dart';
-import '../widgets/app_name_text.dart';
+import '../../controller/main_controller.dart';
+import '../../widgets/app_name_text.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

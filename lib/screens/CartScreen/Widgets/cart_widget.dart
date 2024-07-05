@@ -4,7 +4,8 @@ import 'package:iconly/iconly.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
-import 'quantity_btm_sheet.dart';
+import '../../../widgets/heart_btn.dart';
+import '../../SearchScreen/Widgets/quantity_btm_sheet.dart';
 
 class CartWidget extends StatelessWidget {
   const CartWidget({super.key});
@@ -50,12 +51,7 @@ class CartWidget extends StatelessWidget {
                                   Icons.clear,
                                   color: Colors.red,
                                 )),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  IconlyLight.heart,
-                                  color: Colors.red,
-                                )),
+                          const HeartButtonWidget(),
                           ],
                         ),
 

@@ -1,10 +1,10 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shop_smart/widgets/products_widget.dart';
+import 'package:shop_smart/screens/SearchScreen/Widgets/products_widget.dart';
 import 'package:shop_smart/widgets/title_text.dart';
-import '../consts/assets.dart';
-import '../controller/search_controller.dart';
+import '../../consts/assets.dart';
+import '../../controller/search_controller.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
