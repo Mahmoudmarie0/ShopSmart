@@ -1,10 +1,13 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconly/iconly.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 
 
 import '../consts/assets.dart';
+import '../screens/product_details.dart';
 
 class LatestArrivalProductWidget extends StatelessWidget {
   const LatestArrivalProductWidget({super.key});
@@ -15,7 +18,9 @@ class LatestArrivalProductWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: (){},
+        onTap: ()async{
+          await Get.to(() => const ProductDetails());
+        },
         child: SizedBox(
           width: size.width*0.45,
           child: Row(

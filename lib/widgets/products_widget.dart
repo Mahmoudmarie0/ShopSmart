@@ -1,9 +1,12 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:shop_smart/consts/assets.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
+
+import '../screens/product_details.dart';
 
 class ProductWidget extends StatefulWidget {
   const ProductWidget({super.key});
@@ -19,7 +22,9 @@ class _ProductWidgetState extends State<ProductWidget> {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: GestureDetector(
-        onTap: (){},
+        onTap: ()async{
+         await Get.to(() => const ProductDetails());
+        },
         child: Column(
           children: [
             ClipRRect(
