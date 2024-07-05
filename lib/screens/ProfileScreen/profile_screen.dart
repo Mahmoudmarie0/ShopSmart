@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/consts/assets.dart';
@@ -8,6 +10,7 @@ import 'package:shop_smart/widgets/title_text.dart';
 
 import '../../controller/main_controller.dart';
 import '../../widgets/app_name_text.dart';
+import '../../widgets/show_dialog_widget.dart';
 import '../WishlistScreen/wishlish_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -133,7 +136,15 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 Center(
                     child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await ShowDialogWidget.showErrorORWarningDialog(
+                      context: context,
+                      subtitle: "Are you sure you want to logout?",
+                      isError: false,
+                      fct: () {}
+
+                    );
+                  },
                   label: const Text(
                     'Login',
                     style: TextStyle(color: Colors.white),
