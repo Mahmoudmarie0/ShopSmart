@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/consts/assets.dart';
+import 'package:shop_smart/screens/ViewedRecentlyScreen/viewed_recently_screen.dart';
 import 'package:shop_smart/widgets/list_tile.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
@@ -91,13 +92,16 @@ class ProfileScreen extends StatelessWidget {
                       ListTileWidget(
                           imagePath: AssetsPaths.wishlistSvg,
                           text: "Wishlist",
-                          function: () {
-                            Get.to(const WishlistScreen());
+                          function: () async {
+                           await Get.to(const WishlistScreen());
                           }),
-                      ListTileWidget(
+                      ListTileWidget (
                           imagePath: AssetsPaths.recent,
                           text: "Viewed recently",
-                          function: () {}),
+                          function: ()async {
+                            await Get.to(const ViewedRecentlyScreen());
+
+                          }),
                       ListTileWidget(
                           imagePath: AssetsPaths.address,
                           text: "Address",
