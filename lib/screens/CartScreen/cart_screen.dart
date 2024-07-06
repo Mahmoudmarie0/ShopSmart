@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_smart/consts/assets.dart';
-import 'package:shop_smart/widgets/button_checkout.dart';
+import 'package:shop_smart/screens/CartScreen/Widgets/button_checkout.dart';
 import 'package:shop_smart/widgets/empty_bag.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 import 'Widgets/cart_widget.dart';

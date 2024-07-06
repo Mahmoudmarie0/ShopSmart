@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -96,14 +95,13 @@ class ProfileScreen extends StatelessWidget {
                           imagePath: AssetsPaths.wishlistSvg,
                           text: "Wishlist",
                           function: () async {
-                           await Get.to(const WishlistScreen());
+                            await Get.to(const WishlistScreen());
                           }),
-                      ListTileWidget (
+                      ListTileWidget(
                           imagePath: AssetsPaths.recent,
                           text: "Viewed recently",
-                          function: ()async {
+                          function: () async {
                             await Get.to(const ViewedRecentlyScreen());
-
                           }),
                       ListTileWidget(
                           imagePath: AssetsPaths.address,
@@ -138,12 +136,10 @@ class ProfileScreen extends StatelessWidget {
                     child: ElevatedButton.icon(
                   onPressed: () async {
                     await ShowDialogWidget.showErrorORWarningDialog(
-                      context: context,
-                      subtitle: "Are you sure you want to logout?",
-                      isError: false,
-                      fct: () {}
-
-                    );
+                        context: context,
+                        subtitle: "Are you sure you want to logout?",
+                        isError: false,
+                        fct: () {});
                   },
                   label: const Text(
                     'Login',
