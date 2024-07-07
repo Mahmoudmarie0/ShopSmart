@@ -6,6 +6,7 @@ import 'package:shop_smart/widgets/app_name_text.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 import '../../../controller/log_in_controller.dart';
+import 'widgets/google_btn.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
@@ -145,30 +146,52 @@ class LogInScreen extends StatelessWidget {
                             const SizedBox(
                               height: 16,
                             ),
-                            Row(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    controller.login();
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      padding: const EdgeInsets.all(12.0),
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .surface,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      )),
-                                  child: const Text(
-                                    'Guest',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                height: kBottomNavigationBarHeight + 10,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    const Expanded(
+                                      flex: 2,
+                                      child: SizedBox(
+                                          height: kBottomNavigationBarHeight,
+                                          child:
+                                              FittedBox(child: GoogleButton())),
                                     ),
-                                  ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    Expanded(
+                                      child: SizedBox(
+                                        height: kBottomNavigationBarHeight,
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            controller.login();
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              backgroundColor: Colors.white,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              )),
+                                          child: const Text(
+                                            'Guest',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                             const SizedBox(
                               height: 16,

@@ -4,7 +4,6 @@ import 'package:shop_smart/consts/theme_data.dart';
 import 'package:shop_smart/controller/main_controller.dart';
 import 'package:shop_smart/controller/my_bindings.dart';
 import 'package:shop_smart/screens/Auth/LoginScreen/log_in_screen.dart';
-import 'package:shop_smart/screens/RootScreen/root_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,8 +31,8 @@ class _MyAppState extends State<MyApp> {
             title: 'Shop Smart',
             theme: Styles.themeData(
                 isDarkTheme: controller.getIsDarkTheme, context: context),
-            home:// const RootScreen(),
-          const  LogInScreen(),
+            home: // const RootScreen(),
+                const LogInScreen(),
           );
         });
   }
