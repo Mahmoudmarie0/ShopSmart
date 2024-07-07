@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:iconly/iconly.dart';
 import 'package:shop_smart/controller/register_controller.dart';
+import 'package:shop_smart/screens/Auth/RegisterScreen/widgets/pick_image_widget.dart';
 
 import '../../../consts/my_validators.dart';
 import '../../../widgets/app_name_text.dart';
@@ -12,6 +13,7 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return GetBuilder<RegisterController>(
         init: RegisterController(),
         builder: (controller) {
@@ -39,6 +41,15 @@ class RegisterScreen extends StatelessWidget {
                           child: TitleTextWidget(
                             label: "Welcome",
                           )),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                       SizedBox(
+                       height: size.width * 0.3,
+                         width: size.width * 0.3,
+
+
+                         child:  PickImageWidget(function: (){}, pickedImage:controller.pickedImage ,   )),
                       const SizedBox(
                         height: 16.0,
                       ),

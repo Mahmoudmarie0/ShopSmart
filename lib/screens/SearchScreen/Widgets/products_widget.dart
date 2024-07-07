@@ -75,6 +75,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                         padding: EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.add_shopping_cart_rounded,
+                          color: Colors.white,
                           size: 18,
                         ),
                       ),

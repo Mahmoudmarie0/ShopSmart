@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterController extends GetxController {
   late TextEditingController usernameController;
@@ -14,6 +15,7 @@ class RegisterController extends GetxController {
   late final FocusNode usernameFocusNode;
   late final formKey = GlobalKey<FormState>();
   bool obsecureText = true;
+  XFile?pickedImage;
 
   @override
   void onInit() {
