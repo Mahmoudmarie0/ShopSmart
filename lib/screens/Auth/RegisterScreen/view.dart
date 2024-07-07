@@ -6,7 +6,6 @@ import 'package:shop_smart/screens/Auth/RegisterScreen/widgets/pick_image_widget
 
 import '../../../consts/my_validators.dart';
 import '../../../widgets/app_name_text.dart';
-import '../../../widgets/show_dialog_widget.dart';
 import '../../../widgets/title_text.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -50,12 +49,7 @@ class RegisterScreen extends StatelessWidget {
                           width: size.width * 0.3,
                           child: PickImageWidget(
                             function: () async {
-                              await ShowDialogWidget.imagePickerDialog(
-                                context: context,
-                                cameraFCT: () {},
-                                galleryFCT: () {},
-                                removeFCT: () {},
-                              );
+                              await controller.localImagePicker();
                             },
                             pickedImage: controller.pickedImage,
                           )),
@@ -133,7 +127,7 @@ class RegisterScreen extends StatelessWidget {
                               onFieldSubmitted: (value) {
                                 FocusScope.of(context).requestFocus(
                                     controller.confirmpasswordFocusNode);
-                                controller.login();
+                                controller.register();
                                 controller.update();
                               },
                             ),
@@ -167,7 +161,7 @@ class RegisterScreen extends StatelessWidget {
                                         controller.passwordController.text);
                               },
                               onFieldSubmitted: (value) {
-                                controller.login();
+                                controller.register();
                                 controller.update();
                               },
                             ),
@@ -181,7 +175,7 @@ class RegisterScreen extends StatelessWidget {
                               width: double.infinity,
                               child: ElevatedButton.icon(
                                 onPressed: () async {
-                                  controller.login();
+                                  controller.register();
                                 },
                                 icon: const Icon(
                                   IconlyLight.add_user,

@@ -4,6 +4,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../widgets/show_dialog_widget.dart';
+
 class RegisterController extends GetxController {
   late TextEditingController usernameController;
   late TextEditingController emailController;
@@ -47,12 +49,40 @@ class RegisterController extends GetxController {
     update();
   }
 
-  Future<void> login() async {
+  Future<void> register() async {
     final isValid = formKey.currentState!.validate();
     FocusScope.of(Get.context!).unfocus();
     if (isValid) {
-      // return;
+      formKey.currentState!.save();
+      if (pickedImage == null) {
+        ShowDialogWidget.showErrorORWarningDialog(
+            context: Get.context!,
+            subtitle: 'Make sure you pick an image',
+            fct: () {});
+      }
     }
     // formKey.currentState!.save();
+  }
+
+//   cameraFCT: () {},
+// galleryFCT: () {},
+// removeFCT: () {},
+
+  Future<void> localImagePicker() async {
+    final ImagePicker picker = ImagePicker();
+    await ShowDialogWidget.imagePickerDialog(
+        context: Get.context!,
+        cameraFCT: () async {
+          pickedImage = await picker.pickImage(source: ImageSource.camera);
+          update();
+        },
+        galleryFCT: () async {
+          pickedImage = await picker.pickImage(source: ImageSource.gallery);
+          update();
+        },
+        removeFCT: () {
+          pickedImage = null;
+          update();
+        });
   }
 }
