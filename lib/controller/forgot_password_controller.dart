@@ -1,33 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class ForgotPasswordController extends GetxController {
-  late final TextEditingController _emailController;
-  late final _formKey = GlobalKey<FormState>();
+  late final TextEditingController emailController;
+  late final formKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
     // TODO: implement onInit
-    _emailController = TextEditingController();
+    emailController = TextEditingController();
     super.onInit();
+    update();
   }
-
 
   @override
   void dispose() {
     // TODO: implement dispose
-      _emailController.dispose();
+    emailController.dispose();
     super.dispose();
     update();
   }
 
-  Future<void> _forgetPassFCT() async {
-    final isValid = _formKey.currentState!.validate();
+  Future<void> forgetPassFCT() async {
+    final isValid = formKey.currentState!.validate();
     FocusScope.of(Get.context!).unfocus();
     if (isValid) {}
   }
-
-
-
 }

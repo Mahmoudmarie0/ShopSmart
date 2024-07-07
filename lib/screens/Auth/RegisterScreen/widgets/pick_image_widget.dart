@@ -20,7 +20,7 @@ class PickImageWidget extends StatelessWidget {
                 ? Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(),
+                      border: Border.all(color: Colors.grey),
                     ),
                   )
                 : Image.file(

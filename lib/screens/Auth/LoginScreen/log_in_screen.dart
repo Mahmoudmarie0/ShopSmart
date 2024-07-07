@@ -6,6 +6,7 @@ import 'package:shop_smart/widgets/app_name_text.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 import '../../../controller/log_in_controller.dart';
+import '../ForgotPasswordScreen/forgot_password_screen.dart';
 import '../RegisterScreen/view.dart';
 import 'widgets/google_btn.dart';
 
@@ -103,7 +104,9 @@ class LogInScreen extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerRight,
                               child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    await Get.to(const ForgotPasswordScreen());
+                                  },
                                   child: const SubtitleTextWidget(
                                     label: 'Forgot password?',
                                     textDecorations: TextDecoration.underline,

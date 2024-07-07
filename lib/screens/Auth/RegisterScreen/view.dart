@@ -169,7 +169,7 @@ class RegisterScreen extends StatelessWidget {
                               height: 16,
                             ),
                             const SizedBox(
-                              height: 16,
+                              height: 25,
                             ),
                             SizedBox(
                               width: double.infinity,

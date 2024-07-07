@@ -8,7 +8,8 @@ import 'package:shop_smart/widgets/title_text.dart';
 
 import '../../controller/main_controller.dart';
 import '../../widgets/app_name_text.dart';
-import '../../widgets/show_dialog_widget.dart';
+import '../Auth/LoginScreen/log_in_screen.dart';
+import '../OrderScreen/order_screen.dart';
 import '../WishlistScreen/wishlish_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -89,7 +90,9 @@ class ProfileScreen extends StatelessWidget {
                       ListTileWidget(
                           imagePath: AssetsPaths.orderSvg,
                           text: "All Orders",
-                          function: () {}),
+                          function: () {
+                            Get.to(const OrdersScreen());
+                          }),
                       ListTileWidget(
                           imagePath: AssetsPaths.wishlistSvg,
                           text: "Wishlist",
@@ -134,11 +137,13 @@ class ProfileScreen extends StatelessWidget {
                 Center(
                     child: ElevatedButton.icon(
                   onPressed: () async {
-                    await ShowDialogWidget.showErrorORWarningDialog(
-                        context: context,
-                        subtitle: "Are you sure you want to logout?",
-                        isError: false,
-                        fct: () {});
+                    // await ShowDialogWidget.showErrorORWarningDialog(
+                    //     context: context,
+                    //     subtitle: "Are you sure you want to logout?",
+                    //     isError: false,
+                    //     fct: () {});
+
+                    await Get.to(const LogInScreen());
                   },
                   label: const Text(
                     'Login',
