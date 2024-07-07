@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
+import 'package:shop_smart/widgets/title_text.dart';
 
 import '../consts/assets.dart';
 
@@ -65,6 +66,79 @@ class ShowDialogWidget {
                   ],
                 )
               ],
+            ),
+          );
+        });
+  }
+
+  static Future<void> imagePickerDialog(
+      {required BuildContext context,
+      required Function cameraFCT,
+      required Function galleryFCT,
+      required Function removeFCT}) async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Center(
+              child: TitleTextWidget(
+                label: "Choose option",
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  TextButton.icon(
+                    onPressed: () {
+                      cameraFCT();
+
+                      Get.back();
+                    },
+                    icon: const Icon(
+                      Icons.camera,
+                      color: Colors.blue,
+                    ),
+                    label: const Text(
+                      "Camera",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      galleryFCT();
+
+                      Get.back();
+                    },
+                    icon: const Icon(
+                      Icons.image,
+                      color: Colors.blue,
+                    ),
+                    label: const Text(
+                      "Gallery",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      removeFCT();
+
+                      Get.back();
+                    },
+                    icon: const Icon(
+                      Icons.remove,
+                      color: Colors.blue,
+                    ),
+                    label: const Text(
+                      "Remove",
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         });

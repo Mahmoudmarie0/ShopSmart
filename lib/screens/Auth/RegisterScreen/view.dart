@@ -6,6 +6,7 @@ import 'package:shop_smart/screens/Auth/RegisterScreen/widgets/pick_image_widget
 
 import '../../../consts/my_validators.dart';
 import '../../../widgets/app_name_text.dart';
+import '../../../widgets/show_dialog_widget.dart';
 import '../../../widgets/title_text.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -44,12 +45,20 @@ class RegisterScreen extends StatelessWidget {
                       const SizedBox(
                         height: 16.0,
                       ),
-                       SizedBox(
-                       height: size.width * 0.3,
-                         width: size.width * 0.3,
-
-
-                         child:  PickImageWidget(function: (){}, pickedImage:controller.pickedImage ,   )),
+                      SizedBox(
+                          height: size.width * 0.3,
+                          width: size.width * 0.3,
+                          child: PickImageWidget(
+                            function: () async {
+                              await ShowDialogWidget.imagePickerDialog(
+                                context: context,
+                                cameraFCT: () {},
+                                galleryFCT: () {},
+                                removeFCT: () {},
+                              );
+                            },
+                            pickedImage: controller.pickedImage,
+                          )),
                       const SizedBox(
                         height: 16.0,
                       ),

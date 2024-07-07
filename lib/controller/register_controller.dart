@@ -15,7 +15,7 @@ class RegisterController extends GetxController {
   late final FocusNode usernameFocusNode;
   late final formKey = GlobalKey<FormState>();
   bool obsecureText = true;
-  XFile?pickedImage;
+  XFile? pickedImage;
 
   @override
   void onInit() {

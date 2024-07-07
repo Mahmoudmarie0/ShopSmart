@@ -16,20 +16,17 @@ class PickImageWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child:pickedImage==null?
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(),
-              ),
-            ) :
-            Image.file(
-              File(pickedImage!.path),
-              fit: BoxFit.fill,
-            ),
-
-
-
+            child: pickedImage == null
+                ? Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(),
+                    ),
+                  )
+                : Image.file(
+                    File(pickedImage!.path),
+                    fit: BoxFit.fill,
+                  ),
           ),
         ),
         Positioned(
@@ -41,7 +38,6 @@ class PickImageWidget extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(16),
               onTap: () {
-
                 function();
               },
               child: const Padding(
@@ -55,16 +51,7 @@ class PickImageWidget extends StatelessWidget {
             ),
           ),
         )
-
-
-
-
-
-
       ],
-
-
-
     );
   }
 }
