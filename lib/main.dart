@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
                 isDarkTheme: controller.getIsDarkTheme, context: context),
             home: // const RootScreen(),
                 const LogInScreen(),
+            // const RegisterScreen(),
           );
         });
   }
