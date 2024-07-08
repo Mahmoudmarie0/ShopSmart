@@ -8,11 +8,11 @@ class ProductModel {
       productQuantity;
 
   ProductModel(
-      this.productId,
-      this.productTitle,
-      this.productPrice,
-      this.productCategory,
-      this.productDescription,
-      this.productImage,
-      this.productQuantity);
+      {required this.productId,
+      required this.productTitle,
+      required this.productPrice,
+      required this.productCategory,
+      required this.productDescription,
+      required this.productImage,
+      required this.productQuantity});
 }

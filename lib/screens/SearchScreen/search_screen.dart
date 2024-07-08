@@ -57,10 +57,15 @@ class SearchScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: DynamicHeightGridView(
-                      itemCount: 220,
+                      itemCount: controller.localProds.length,
                       crossAxisCount: 2,
                       builder: (context, index) {
-                        return const ProductWidget();
+                        return ProductWidget(
+                          image: controller.localProds[index].productImage,
+                          title: controller.localProds[index].productTitle,
+                          price: controller.localProds[index].productPrice,
+                        );
+                        // return controller.localProds[index];
                       },
                     ),
                   ),
