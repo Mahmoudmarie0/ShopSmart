@@ -54,13 +54,13 @@ class SearchScreen extends StatelessWidget {
                                 )),
                           ),
                           onChanged: (value) {
-                            controller.searchQuery(
-                                searchText: controller.searchController.text);
+                            // controller.searchQuery(
+                            //     searchText: controller.searchController.text);
                             controller.update();
                           },
                           onSubmitted: (value) {
                             controller.searchQuery(
-                                searchText: controller.searchController.text);
+                                searchText: controller.searchController.text, passedList: productModel);
                             controller.update();
                             print(value);
                           },
@@ -68,6 +68,12 @@ class SearchScreen extends StatelessWidget {
                         const SizedBox(
                           height: 15,
                         ),
+                        controller.searchController.text.isNotEmpty && controller.searchQuery(searchText: controller.searchController.text, passedList: productModel).isEmpty
+                            ? const TitleTextWidget(
+                          label: "No Result",
+                          fontSize: 22,
+                        )
+                            :
                         Expanded(
                           child: DynamicHeightGridView(
                             itemCount: controller
@@ -75,7 +81,7 @@ class SearchScreen extends StatelessWidget {
                                 ? controller
                                     .searchQuery(
                                         searchText:
-                                            controller.searchController.text)
+                                            controller.searchController.text, passedList: productModel)
                                     .length
                                 : catId.isNotEmpty
                                     ? productModel.length
@@ -87,22 +93,22 @@ class SearchScreen extends StatelessWidget {
                                       image: controller
                                           .searchQuery(
                                               searchText: controller
-                                                  .searchController.text)[index]
+                                                  .searchController.text, passedList: productModel)[index]
                                           .productImage,
                                       title: controller
                                           .searchQuery(
                                               searchText: controller
-                                                  .searchController.text)[index]
+                                                  .searchController.text, passedList: productModel)[index]
                                           .productTitle,
                                       price: controller
                                           .searchQuery(
                                               searchText: controller
-                                                  .searchController.text)[index]
+                                                  .searchController.text, passedList: productModel)[index]
                                           .productPrice,
                                       id: controller
                                           .searchQuery(
                                               searchText: controller
-                                                  .searchController.text)[index]
+                                                  .searchController.text, passedList: productModel )[index]
                                           .productId,
                                     )
                                   : catId.isNotEmpty

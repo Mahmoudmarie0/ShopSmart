@@ -45,8 +45,8 @@ class SEarchController extends GetxController {
     return ctgList;
   }
 
-  List<ProductModel> searchQuery({required String searchText}) {
-    List<ProductModel> searchList = localProds
+  List<ProductModel> searchQuery({required String searchText,required List<ProductModel>passedList}) {
+    List<ProductModel> searchList = passedList
         .where((element) => element.productTitle
             .toLowerCase()
             .contains(searchText.toLowerCase()))
