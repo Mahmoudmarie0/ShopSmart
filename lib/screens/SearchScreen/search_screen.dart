@@ -13,6 +13,7 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final catId = ModalRoute.of(context)!.settings.arguments as String? ?? "";
     final productModel = SEarchController().findByCategory(ctgId: catId);
+
     return productModel.isEmpty
         ? const Scaffold(body: Center(child: Text("Not Found")))
         : GestureDetector(
@@ -52,8 +53,15 @@ class SearchScreen extends StatelessWidget {
                                   color: Colors.red,
                                 )),
                           ),
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            controller.searchQuery(
+                                searchText: controller.searchController.text);
+                            controller.update();
+                          },
                           onSubmitted: (value) {
+                            controller.searchQuery(
+                                searchText: controller.searchController.text);
+                            controller.update();
                             print(value);
                           },
                         ),
@@ -62,28 +70,61 @@ class SearchScreen extends StatelessWidget {
                         ),
                         Expanded(
                           child: DynamicHeightGridView(
-                            itemCount: catId.isNotEmpty
-                                ? productModel.length
-                                : controller.localProds.length,
+                            itemCount: controller
+                                    .searchController.text.isNotEmpty
+                                ? controller
+                                    .searchQuery(
+                                        searchText:
+                                            controller.searchController.text)
+                                    .length
+                                : catId.isNotEmpty
+                                    ? productModel.length
+                                    : controller.localProds.length,
                             crossAxisCount: 2,
                             builder: (context, index) {
-                              return catId.isNotEmpty
+                              return controller.searchController.text.isNotEmpty
                                   ? ProductWidget(
-                                      image: productModel[index].productImage,
-                                      title: productModel[index].productTitle,
-                                      price: productModel[index].productPrice,
-                                      id: productModel[index].productId,
-                                    )
-                                  : ProductWidget(
                                       image: controller
-                                          .localProds[index].productImage,
+                                          .searchQuery(
+                                              searchText: controller
+                                                  .searchController.text)[index]
+                                          .productImage,
                                       title: controller
-                                          .localProds[index].productTitle,
+                                          .searchQuery(
+                                              searchText: controller
+                                                  .searchController.text)[index]
+                                          .productTitle,
                                       price: controller
-                                          .localProds[index].productPrice,
+                                          .searchQuery(
+                                              searchText: controller
+                                                  .searchController.text)[index]
+                                          .productPrice,
                                       id: controller
-                                          .localProds[index].productId,
-                                    );
+                                          .searchQuery(
+                                              searchText: controller
+                                                  .searchController.text)[index]
+                                          .productId,
+                                    )
+                                  : catId.isNotEmpty
+                                      ? ProductWidget(
+                                          image:
+                                              productModel[index].productImage,
+                                          title:
+                                              productModel[index].productTitle,
+                                          price:
+                                              productModel[index].productPrice,
+                                          id: productModel[index].productId,
+                                        )
+                                      : ProductWidget(
+                                          image: controller
+                                              .localProds[index].productImage,
+                                          title: controller
+                                              .localProds[index].productTitle,
+                                          price: controller
+                                              .localProds[index].productPrice,
+                                          id: controller
+                                              .localProds[index].productId,
+                                        );
                               // return controller.localProds[index];
                             },
                           ),

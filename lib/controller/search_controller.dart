@@ -6,6 +6,7 @@ import '../models/product_model.dart';
 
 class SEarchController extends GetxController {
   TextEditingController searchController = TextEditingController();
+
   ProductModel? productModel;
 
   @override
@@ -42,6 +43,15 @@ class SEarchController extends GetxController {
             element.productCategory.toLowerCase().contains(ctgId.toLowerCase()))
         .toList();
     return ctgList;
+  }
+
+  List<ProductModel> searchQuery({required String searchText}) {
+    List<ProductModel> searchList = localProds
+        .where((element) => element.productTitle
+            .toLowerCase()
+            .contains(searchText.toLowerCase()))
+        .toList();
+    return searchList;
   }
 
   List<ProductModel> localProds = [

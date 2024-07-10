@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:shop_smart/screens/SearchScreen/search_screen.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 
-
 class CategoryRoundedWidget extends StatelessWidget {
   final String image, name;
   const CategoryRoundedWidget(
