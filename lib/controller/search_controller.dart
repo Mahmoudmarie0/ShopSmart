@@ -36,6 +36,14 @@ class SEarchController extends GetxController {
     return localProds.firstWhere((element) => element.productId == prodId);
   }
 
+  List<ProductModel> findByCategory({required String ctgId}) {
+    List<ProductModel> ctgList = localProds
+        .where((element) =>
+            element.productCategory.toLowerCase().contains(ctgId.toLowerCase()))
+        .toList();
+    return ctgList;
+  }
+
   List<ProductModel> localProds = [
     // Phones
     ProductModel(

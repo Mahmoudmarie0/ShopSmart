@@ -11,69 +11,87 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: GetBuilder<SEarchController>(
-        init: SEarchController(),
-        builder: (controller) => Scaffold(
-            appBar: AppBar(
-              title: const TitleTextWidget(label: "Search "),
-              leading: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(AssetsPaths.shoppingCart),
-              ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 15,
+    final catId = ModalRoute.of(context)!.settings.arguments as String? ?? "";
+    final productModel = SEarchController().findByCategory(ctgId: catId);
+    return productModel.isEmpty
+        ? const Scaffold(body: Center(child: Text("Not Found")))
+        : GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: GetBuilder<SEarchController>(
+              init: SEarchController(),
+              builder: (controller) => Scaffold(
+                  appBar: AppBar(
+                    title:
+                        TitleTextWidget(label: catId == "" ? "Search" : catId),
+                    leading: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(AssetsPaths.shoppingCart),
+                    ),
                   ),
-                  TextField(
-                    controller: controller.searchController,
-                    decoration: InputDecoration(
-                      filled: true,
-                      prefixIcon: const Icon(Icons.search),
-                      suffixIcon: GestureDetector(
-                          onTap: () {
-                            controller.clearText();
-                            FocusScope.of(context).unfocus();
+                  body: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        TextField(
+                          controller: controller.searchController,
+                          decoration: InputDecoration(
+                            filled: true,
+                            prefixIcon: const Icon(Icons.search),
+                            suffixIcon: GestureDetector(
+                                onTap: () {
+                                  controller.clearText();
+                                  FocusScope.of(context).unfocus();
+                                },
+                                child: const Icon(
+                                  Icons.clear,
+                                  color: Colors.red,
+                                )),
+                          ),
+                          onChanged: (value) {},
+                          onSubmitted: (value) {
+                            print(value);
                           },
-                          child: const Icon(
-                            Icons.clear,
-                            color: Colors.red,
-                          )),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Expanded(
+                          child: DynamicHeightGridView(
+                            itemCount: catId.isNotEmpty
+                                ? productModel.length
+                                : controller.localProds.length,
+                            crossAxisCount: 2,
+                            builder: (context, index) {
+                              return catId.isNotEmpty
+                                  ? ProductWidget(
+                                      image: productModel[index].productImage,
+                                      title: productModel[index].productTitle,
+                                      price: productModel[index].productPrice,
+                                      id: productModel[index].productId,
+                                    )
+                                  : ProductWidget(
+                                      image: controller
+                                          .localProds[index].productImage,
+                                      title: controller
+                                          .localProds[index].productTitle,
+                                      price: controller
+                                          .localProds[index].productPrice,
+                                      id: controller
+                                          .localProds[index].productId,
+                                    );
+                              // return controller.localProds[index];
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    onChanged: (value) {},
-                    onSubmitted: (value) {
-                      print(value);
-                    },
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Expanded(
-                    child: DynamicHeightGridView(
-                      itemCount: controller.localProds.length,
-                      crossAxisCount: 2,
-                      builder: (context, index) {
-                        return ProductWidget(
-                          image: controller.localProds[index].productImage,
-                          title: controller.localProds[index].productTitle,
-                          price: controller.localProds[index].productPrice,
-                          id: controller.localProds[index].productId,
-                        );
-                        // return controller.localProds[index];
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            )),
-      ),
-    );
+                  )),
+            ),
+          );
   }
 }
