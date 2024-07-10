@@ -1,8 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../consts/assets.dart';
+import '../../controller/search_controller.dart';
 import '../../widgets/app_name_text.dart';
 import '../../widgets/heart_btn.dart';
 import '../../widgets/subtitle_text.dart';
@@ -19,6 +18,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    SEarchController searchController = Get.put(SEarchController());
+    final productModel = searchController.findByProdId(productId);
     return Scaffold(
       appBar: AppBar(
         title: const AppNameTextWidgets(
@@ -38,7 +40,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       body: Column(
         children: [
           FancyShimmerImage(
-            imageUrl: AssetsPaths.productImageUrl,
+            imageUrl: productModel!.productImage,
             height: size.height * 0.26,
             width: double.infinity,
             boxFit: BoxFit.contain,
@@ -52,7 +54,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   children: [
                     Flexible(
                         child: Text(
-                      "Title" * 16,
+                      productModel.productTitle,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -61,8 +63,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     const SizedBox(
                       width: 14,
                     ),
-                    const SubtitleTextWidget(
-                      label: "166.5\$",
+                    SubtitleTextWidget(
+                      label: "${productModel.productPrice}\$",
                       textDecorations: TextDecoration.none,
                       color: Colors.blue,
                       fontWeight: FontWeight.bold,
@@ -103,12 +105,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ],
                   ),
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TitleTextWidget(label: "About this item"),
+                    const TitleTextWidget(label: "About this item"),
                     SubtitleTextWidget(
-                        label: "In Phones",
+                        label: productModel.productCategory,
                         textDecorations: TextDecoration.none)
                   ],
                 ),
@@ -116,7 +118,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   height: 25,
                 ),
                 SubtitleTextWidget(
-                    label: "description" * 15,
+                    label: productModel.productDescription,
                     textDecorations: TextDecoration.none)
               ],
             ),

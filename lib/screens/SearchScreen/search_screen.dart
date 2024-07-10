@@ -64,6 +64,7 @@ class SearchScreen extends StatelessWidget {
                           image: controller.localProds[index].productImage,
                           title: controller.localProds[index].productTitle,
                           price: controller.localProds[index].productPrice,
+                          id: controller.localProds[index].productId,
                         );
                         // return controller.localProds[index];
                       },

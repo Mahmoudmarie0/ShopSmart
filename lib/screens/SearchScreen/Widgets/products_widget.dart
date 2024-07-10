@@ -5,18 +5,21 @@ import 'package:shop_smart/consts/assets.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
+import '../../../controller/search_controller.dart';
 import '../../../widgets/heart_btn.dart';
 import '../../ProductDetails/product_details.dart';
 
 class ProductWidget extends StatefulWidget {
-  const ProductWidget({super.key, this.image, this.title, this.price});
-  final String? image, title, price;
+  const ProductWidget({super.key, this.image, this.title, this.price, this.id});
+  final String? image, title, price, id;
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
 }
 
 class _ProductWidgetState extends State<ProductWidget> {
+  SEarchController searchController = Get.put(SEarchController());
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,7 +27,8 @@ class _ProductWidgetState extends State<ProductWidget> {
       padding: const EdgeInsets.all(3.0),
       child: GestureDetector(
         onTap: () async {
-          await Get.to(() => const ProductDetails());
+          searchController.findByProdId(widget.id!);
+          await Get.to(() => const ProductDetails(), arguments: widget.id!);
         },
         child: Column(
           children: [

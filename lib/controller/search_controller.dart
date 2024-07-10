@@ -6,6 +6,7 @@ import '../models/product_model.dart';
 
 class SEarchController extends GetxController {
   TextEditingController searchController = TextEditingController();
+  ProductModel? productModel;
 
   @override
   void onInit() {
@@ -25,6 +26,14 @@ class SEarchController extends GetxController {
   void clearText() {
     searchController.clear();
     update();
+  }
+
+  ProductModel? findByProdId(String prodId) {
+    if (localProds.where((element) => element.productId == prodId).isEmpty) {
+      return null;
+    }
+
+    return localProds.firstWhere((element) => element.productId == prodId);
   }
 
   List<ProductModel> localProds = [
