@@ -60,7 +60,8 @@ class SearchScreen extends StatelessWidget {
                           },
                           onSubmitted: (value) {
                             controller.searchQuery(
-                                searchText: controller.searchController.text, passedList: productModel);
+                                searchText: controller.searchController.text,
+                                passedList: productModel);
                             controller.update();
                             print(value);
                           },
@@ -68,73 +69,92 @@ class SearchScreen extends StatelessWidget {
                         const SizedBox(
                           height: 15,
                         ),
-                        controller.searchController.text.isNotEmpty && controller.searchQuery(searchText: controller.searchController.text, passedList: productModel).isEmpty
-                            ? const TitleTextWidget(
-                          label: "No Result",
-                          fontSize: 22,
-                        )
-                            :
-                        Expanded(
-                          child: DynamicHeightGridView(
-                            itemCount: controller
-                                    .searchController.text.isNotEmpty
-                                ? controller
+                        controller.searchController.text.isNotEmpty &&
+                                controller
                                     .searchQuery(
                                         searchText:
-                                            controller.searchController.text, passedList: productModel)
-                                    .length
-                                : catId.isNotEmpty
-                                    ? productModel.length
-                                    : controller.localProds.length,
-                            crossAxisCount: 2,
-                            builder: (context, index) {
-                              return controller.searchController.text.isNotEmpty
-                                  ? ProductWidget(
-                                      image: controller
+                                            controller.searchController.text,
+                                        passedList: productModel)
+                                    .isEmpty
+                            ? const TitleTextWidget(
+                                label: "No Result",
+                                fontSize: 22,
+                              )
+                            : Expanded(
+                                child: DynamicHeightGridView(
+                                  itemCount: controller
+                                          .searchController.text.isNotEmpty
+                                      ? controller
                                           .searchQuery(
                                               searchText: controller
-                                                  .searchController.text, passedList: productModel)[index]
-                                          .productImage,
-                                      title: controller
-                                          .searchQuery(
-                                              searchText: controller
-                                                  .searchController.text, passedList: productModel)[index]
-                                          .productTitle,
-                                      price: controller
-                                          .searchQuery(
-                                              searchText: controller
-                                                  .searchController.text, passedList: productModel)[index]
-                                          .productPrice,
-                                      id: controller
-                                          .searchQuery(
-                                              searchText: controller
-                                                  .searchController.text, passedList: productModel )[index]
-                                          .productId,
-                                    )
-                                  : catId.isNotEmpty
-                                      ? ProductWidget(
-                                          image:
-                                              productModel[index].productImage,
-                                          title:
-                                              productModel[index].productTitle,
-                                          price:
-                                              productModel[index].productPrice,
-                                          id: productModel[index].productId,
-                                        )
-                                      : ProductWidget(
-                                          image: controller
-                                              .localProds[index].productImage,
-                                          title: controller
-                                              .localProds[index].productTitle,
-                                          price: controller
-                                              .localProds[index].productPrice,
-                                          id: controller
-                                              .localProds[index].productId,
-                                        );
-                              // return controller.localProds[index];
-                            },
-                          ),
-                        ),
+                                                  .searchController.text,
+                                              passedList: productModel)
+                                          .length
+                                      : catId.isNotEmpty
+                                          ? productModel.length
+                                          : controller.localProds.length,
+                                  crossAxisCount: 2,
+                                  builder: (context, index) {
+                                    return controller
+                                            .searchController.text.isNotEmpty
+                                        ? ProductWidget(
+                                            image: controller
+                                                .searchQuery(
+                                                    searchText: controller
+                                                        .searchController.text,
+                                                    passedList:
+                                                        productModel)[index]
+                                                .productImage,
+                                            title: controller
+                                                .searchQuery(
+                                                    searchText: controller
+                                                        .searchController.text,
+                                                    passedList:
+                                                        productModel)[index]
+                                                .productTitle,
+                                            price: controller
+                                                .searchQuery(
+                                                    searchText: controller
+                                                        .searchController.text,
+                                                    passedList:
+                                                        productModel)[index]
+                                                .productPrice,
+                                            id: controller
+                                                .searchQuery(
+                                                    searchText: controller
+                                                        .searchController.text,
+                                                    passedList:
+                                                        productModel)[index]
+                                                .productId,
+                                          )
+                                        : catId.isNotEmpty
+                                            ? ProductWidget(
+                                                image: productModel[index]
+                                                    .productImage,
+                                                title: productModel[index]
+                                                    .productTitle,
+                                                price: productModel[index]
+                                                    .productPrice,
+                                                id: productModel[index]
+                                                    .productId,
+                                              )
+                                            : ProductWidget(
+                                                image: controller
+                                                    .localProds[index]
+                                                    .productImage,
+                                                title: controller
+                                                    .localProds[index]
+                                                    .productTitle,
+                                                price: controller
+                                                    .localProds[index]
+                                                    .productPrice,
+                                                id: controller.localProds[index]
+                                                    .productId,
+                                              );
+                                    // return controller.localProds[index];
+                                  },
+                                ),
+                              ),
                       ],
                     ),
                   )),
