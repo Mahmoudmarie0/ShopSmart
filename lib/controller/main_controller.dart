@@ -8,6 +8,7 @@ class MainController extends GetxController {
 
   MainController() {
     //to save the theme value
+
     getTheme();
   }
 

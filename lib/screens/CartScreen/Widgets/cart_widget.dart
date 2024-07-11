@@ -1,18 +1,27 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:shop_smart/models/cart_model.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
+import '../../../controller/cart_controller.dart';
+import '../../../controller/search_controller.dart';
 import '../../../widgets/heart_btn.dart';
 import '../../SearchScreen/Widgets/quantity_btm_sheet.dart';
 
 class CartWidget extends StatelessWidget {
-  const CartWidget({super.key});
+  final CartModel cartModel;
+  const CartWidget({super.key, required this.cartModel});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    SEarchController searchController = Get.put(SEarchController());
+    CartController cartController = Get.put(CartController());
+    final getCurrProduct = searchController.findByProdId(cartModel.productId);
+
     return FittedBox(
       child: IntrinsicWidth(
         child: Padding(
@@ -22,8 +31,7 @@ class CartWidget extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: FancyShimmerImage(
-                  imageUrl:
-                      'https://images.unsplash.com/photo-1465572089651-8fde36c892dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+                  imageUrl: getCurrProduct!.productImage,
                   height: size.height * 0.2,
                   width: size.width * 0.4,
                 ),
@@ -40,13 +48,17 @@ class CartWidget extends StatelessWidget {
                         SizedBox(
                             width: size.width * 0.6,
                             child: TitleTextWidget(
-                              label: "Title" * 10,
+                              label: getCurrProduct.productTitle,
                               maxLines: 2,
                             )),
                         Column(
                           children: [
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  // searchController.cartController.removeOneItem( getCurrProduct.productId);
+                                  cartController
+                                      .removeOneItem(getCurrProduct.productId);
+                                },
                                 icon: const Icon(
                                   Icons.clear,
                                   color: Colors.red,
@@ -59,8 +71,8 @@ class CartWidget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const SubtitleTextWidget(
-                          label: "16\$",
+                        SubtitleTextWidget(
+                          label: "${getCurrProduct.productPrice}\$",
                           textDecorations: TextDecoration.none,
                           fontSize: 20,
                           color: Colors.blue,
@@ -84,16 +96,18 @@ class CartWidget extends StatelessWidget {
                                         topRight: Radius.circular(16))),
                                 context: context,
                                 builder: (context) {
-                                  return const QuantityBtmSheet();
+                                  return QuantityBtmSheet(
+                                    productId: getCurrProduct.productId,
+                                  );
                                 });
                           },
                           icon: const Icon(
                             IconlyLight.arrow_down_2,
                             color: Colors.blue,
                           ),
-                          label: const Text(
-                            "Qty:6",
-                            style: TextStyle(color: Colors.blue),
+                          label: Text(
+                            "Qty:${getCurrProduct.productQuantity}",
+                            style: const TextStyle(color: Colors.blue),
                           ),
                         )
                       ],

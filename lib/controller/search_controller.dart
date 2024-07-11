@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:uuid/uuid.dart';
 
@@ -6,6 +7,7 @@ import '../models/product_model.dart';
 
 class SEarchController extends GetxController {
   TextEditingController searchController = TextEditingController();
+  // CartController cartController =CartController();
 
   ProductModel? productModel;
 
@@ -120,7 +122,7 @@ class SEarchController extends GetxController {
     ),
     ProductModel(
       //6
-      productId: const Uuid().v4(),
+      productId: const Uuid().v4().toString(),
       productTitle:
           "OnePlus 9 Pro 5G LE2120 256GB 12GB RAM Factory Unlocked (GSM Only | No CDMA - not Compatible with Verizon/Sprint) International Version - Morning Mist",
       productPrice: "1099.99",

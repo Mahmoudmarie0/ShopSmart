@@ -5,7 +5,7 @@ import 'package:shop_smart/consts/assets.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
-import '../../../controller/cart.dart';
+import '../../../controller/cart_controller.dart';
 import '../../../controller/search_controller.dart';
 import '../../../widgets/heart_btn.dart';
 import '../../ProductDetails/product_details.dart';
@@ -20,6 +20,7 @@ class ProductWidget extends StatefulWidget {
 
 class _ProductWidgetState extends State<ProductWidget> {
   SEarchController searchController = Get.put(SEarchController());
+  final CartController cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,35 +68,33 @@ class _ProductWidgetState extends State<ProductWidget> {
                   Flexible(
                       flex: 3,
                       child: SubtitleTextWidget(
-                        label: "${widget.price}\$" ,
+                        label: "${widget.price}\$",
                         textDecorations: TextDecoration.none,
                       )),
                   Flexible(
-                      child: GetBuilder<CartController>(
-                          init: CartController(),
-                          builder: (controller) {
-                            return Material(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.lightBlue,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(16),
-                                onTap: () {
-                                  controller.AddToCart(productId: widget.id!);
-                                  controller.update();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    controller.isAddedToCart(widget.id!)
-                                        ? Icons.check
-                                        : Icons.add_shopping_cart_rounded,
-                                    color: Colors.white,
-                                    size: 18,
-                                  ),
-                                ),
-                              ),
-                            );
-                          })),
+                      child: GetBuilder<CartController>(builder: (controller) {
+                    return Material(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.lightBlue,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () {
+                          controller.addToCart(productId: widget.id!);
+                          controller.update();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            controller.isAddedToCart(widget.id!)
+                                ? Icons.check
+                                : Icons.add_shopping_cart_rounded,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                        ),
+                      ),
+                    );
+                  })),
                   // const SizedBox(width: 1,),
                 ],
               ),

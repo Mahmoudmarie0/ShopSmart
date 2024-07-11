@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
+
+import '../../../controller/cart_controller.dart';
 
 class CartButtonCheckout extends StatelessWidget {
   const CartButtonCheckout({super.key});
 
   @override
   Widget build(BuildContext context) {
+    CartController cartController = Get.put(CartController());
     return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
@@ -18,15 +22,16 @@ class CartButtonCheckout extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Flexible(
+              Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     FittedBox(
                         child: TitleTextWidget(
-                            label: "Total (6 products/6 Items)")),
+                            label:
+                                "Total (${cartController.getCartItem.length} products/${cartController.getQtyuantity()} Items)")),
                     SubtitleTextWidget(
-                      label: "16.99\$",
+                      label: "${cartController.getTotalPrice()}\$",
                       textDecorations: TextDecoration.none,
                       color: Colors.blue,
                     ),

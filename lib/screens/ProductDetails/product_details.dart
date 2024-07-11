@@ -1,6 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_smart/controller/cart_controller.dart';
 import '../../controller/search_controller.dart';
 import '../../widgets/app_name_text.dart';
 import '../../widgets/heart_btn.dart';
@@ -21,6 +22,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     SEarchController searchController = Get.put(SEarchController());
     final productModel = searchController.findByProdId(productId);
+    CartController cartController = Get.put(CartController());
     return Scaffold(
       appBar: AppBar(
         title: const AppNameTextWidgets(
@@ -90,13 +92,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                           child: SizedBox(
                               height: kBottomNavigationBarHeight - 10,
                               child: ElevatedButton.icon(
-                                onPressed: () {},
-                                label: const Text(
-                                  'Add to cart',
-                                  style: TextStyle(color: Colors.white),
+                                onPressed: () {
+                                  cartController.addToCart(
+                                      productId: productId);
+                                  cartController.update();
+                                },
+                                label: Text(
+                                  cartController.isAddedToCart(productId)
+                                      ? "In cart"
+                                      : 'Add to cart',
+                                  style: const TextStyle(color: Colors.white),
                                 ),
-                                icon: const Icon(
-                                  Icons.add_shopping_cart,
+                                icon: Icon(
+                                  cartController.isAddedToCart(productId)
+                                      ? Icons.check
+                                      : Icons.add_shopping_cart,
                                   color: Colors.white,
                                 ),
                                 style: ElevatedButton.styleFrom(
