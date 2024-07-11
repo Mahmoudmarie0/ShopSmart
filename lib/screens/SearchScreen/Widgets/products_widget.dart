@@ -29,7 +29,7 @@ class _ProductWidgetState extends State<ProductWidget> {
       padding: const EdgeInsets.all(3.0),
       child: GestureDetector(
         onTap: () async {
-          searchController.findByProdId(widget.id!);
+          searchController.mainController.findByProdId(widget.id!);
           await Get.to(() => const ProductDetails(), arguments: widget.id!);
         },
         child: Column(
@@ -71,21 +71,22 @@ class _ProductWidgetState extends State<ProductWidget> {
                         label: "${widget.price}\$",
                         textDecorations: TextDecoration.none,
                       )),
-                  Flexible(
-                      child: GetBuilder<CartController>(builder: (controller) {
+                  Flexible(child:
+                      GetBuilder<SEarchController>(builder: (controller) {
                     return Material(
                       borderRadius: BorderRadius.circular(16),
                       color: Colors.lightBlue,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(16),
                         onTap: () {
-                          controller.addToCart(productId: widget.id!);
+                          controller.mainController
+                              .addToCart(productId: widget.id!);
                           controller.update();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
-                            controller.isAddedToCart(widget.id!)
+                            controller.mainController.isAddedToCart(widget.id!)
                                 ? Icons.check
                                 : Icons.add_shopping_cart_rounded,
                             color: Colors.white,

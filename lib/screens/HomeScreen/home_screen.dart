@@ -74,13 +74,14 @@ class HomeScreen extends StatelessWidget {
                         itemCount: 10,
                         itemBuilder: (context, index) {
                           return LatestArrivalProductWidget(
-                            image:
-                                searchController.localProds[index].productImage,
-                            title:
-                                searchController.localProds[index].productTitle,
-                            price:
-                                searchController.localProds[index].productPrice,
-                            id: searchController.localProds[index].productId,
+                            image: searchController
+                                .mainController.localProds[index].productImage,
+                            title: searchController
+                                .mainController.localProds[index].productTitle,
+                            price: searchController
+                                .mainController.localProds[index].productPrice,
+                            id: searchController
+                                .mainController.localProds[index].productId,
                           );
                         }),
                   ),

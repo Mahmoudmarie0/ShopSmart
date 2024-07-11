@@ -14,8 +14,8 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CartController cartController = Get.put(CartController());
-    return cartController.getCartItem.isEmpty
+    CartController cartController = Get.find();
+    return cartController.mainController.getCartItem.isEmpty
         ? Scaffold(
             body: EmptyBagWidget(
             imagePath: AssetsPaths.shoppingBasket,
@@ -24,54 +24,59 @@ class CartScreen extends StatelessWidget {
                 'Looks like you didn\'t add anything yet to your cart \ngo ahead and start shopping now',
             buttonText: 'Shop now',
           ))
-        : GetBuilder<CartController>(builder: (controller) {
-            return Scaffold(
-              bottomSheet: const CartButtonCheckout(),
-              appBar: AppBar(
-                title: TitleTextWidget(
-                  label: "Cart (${controller.getCartItem.length})",
-                ),
-                leading: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(AssetsPaths.shoppingCart),
-                ),
-                actions: [
-                  IconButton(
-                      onPressed: () {
-                        ShowDialogWidget.showErrorORWarningDialog(
-                            context: context,
-                            subtitle: "Remove all item from cart?",
-                            isError: false,
-                            fct: () {
-                              controller.clearCart();
-                            });
-                      },
-                      icon: const Icon(
-                        Icons.delete_forever_rounded,
-                        color: Colors.red,
-                      ))
-                ],
-              ),
-              body: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: controller.getCartItem.length,
-                        itemBuilder: (context, index) {
-                          return CartWidget(
-                            cartModel: controller.getCartItem.values
-                                .toList()
-                                .reversed
-                                .toList()[index],
-                          );
-                        }),
+        : GetBuilder<CartController>(
+            init: CartController(),
+            builder: (controller) {
+              return Scaffold(
+                bottomSheet: const CartButtonCheckout(),
+                appBar: AppBar(
+                  title: TitleTextWidget(
+                    label:
+                        "Cart (${controller.mainController.getCartItem.length})",
                   ),
-                  const SizedBox(
-                    height: kBottomNavigationBarHeight + 10,
-                  )
-                ],
-              ),
-            );
-          });
+                  leading: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(AssetsPaths.shoppingCart),
+                  ),
+                  actions: [
+                    IconButton(
+                        onPressed: () {
+                          ShowDialogWidget.showErrorORWarningDialog(
+                              context: context,
+                              subtitle: "Remove all item from cart?",
+                              isError: false,
+                              fct: () {
+                                cartController.clearCart();
+                              });
+                        },
+                        icon: const Icon(
+                          Icons.delete_forever_rounded,
+                          color: Colors.red,
+                        ))
+                  ],
+                ),
+                body: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount:
+                              controller.mainController.getCartItem.length,
+                          itemBuilder: (context, index) {
+                            return CartWidget(
+                              cartModel: controller
+                                  .mainController.getCartItem.values
+                                  .toList()
+                                  .reversed
+                                  .toList()[index],
+                            );
+                          }),
+                    ),
+                    const SizedBox(
+                      height: kBottomNavigationBarHeight + 10,
+                    )
+                  ],
+                ),
+              );
+            });
   }
 }

@@ -10,50 +10,55 @@ class CartButtonCheckout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CartController cartController = Get.put(CartController());
-    return Container(
-      decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          border: const Border(top: BorderSide(width: 1, color: Colors.grey))),
-      child: SizedBox(
-        height: kBottomNavigationBarHeight + 10,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return GetBuilder<CartController>(
+        init: CartController(),
+        builder: (controller) {
+          return Container(
+            decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                border: const Border(
+                    top: BorderSide(width: 1, color: Colors.grey))),
+            child: SizedBox(
+              height: kBottomNavigationBarHeight + 10,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    FittedBox(
-                        child: TitleTextWidget(
-                            label:
-                                "Total (${cartController.getCartItem.length} products/${cartController.getQtyuantity()} Items)")),
-                    SubtitleTextWidget(
-                      label: "${cartController.getTotalPrice()}\$",
-                      textDecorations: TextDecoration.none,
-                      color: Colors.blue,
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          FittedBox(
+                              child: TitleTextWidget(
+                                  label:
+                                      "Total (${controller.mainController.getCartItem.length} products/${controller.getQtyuantity()} Items)")),
+                          SubtitleTextWidget(
+                            label: "${controller.getTotalPrice()}\$",
+                            textDecorations: TextDecoration.none,
+                            color: Colors.blue,
+                          ),
+                        ],
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[300],
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0)),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        "Checkout",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[300],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  "Checkout",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }

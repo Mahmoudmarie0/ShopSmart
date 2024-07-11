@@ -5,9 +5,7 @@ import 'package:iconly/iconly.dart';
 import 'package:shop_smart/models/cart_model.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
-
 import '../../../controller/cart_controller.dart';
-import '../../../controller/search_controller.dart';
 import '../../../widgets/heart_btn.dart';
 import '../../SearchScreen/Widgets/quantity_btm_sheet.dart';
 
@@ -18,9 +16,10 @@ class CartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    SEarchController searchController = Get.put(SEarchController());
-    CartController cartController = Get.put(CartController());
-    final getCurrProduct = searchController.findByProdId(cartModel.productId);
+
+    CartController controller = Get.find();
+    final getCurrProduct =
+        controller.mainController.findByProdId(cartModel.productId);
 
     return FittedBox(
       child: IntrinsicWidth(
@@ -55,8 +54,7 @@ class CartWidget extends StatelessWidget {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  // searchController.cartController.removeOneItem( getCurrProduct.productId);
-                                  cartController
+                                  controller
                                       .removeOneItem(getCurrProduct.productId);
                                 },
                                 icon: const Icon(

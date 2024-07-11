@@ -92,7 +92,8 @@ class SearchScreen extends StatelessWidget {
                                           .length
                                       : catId.isNotEmpty
                                           ? productModel.length
-                                          : controller.localProds.length,
+                                          : controller
+                                              .mainController.localProds.length,
                                   crossAxisCount: 2,
                                   builder: (context, index) {
                                     return controller
@@ -140,15 +141,20 @@ class SearchScreen extends StatelessWidget {
                                               )
                                             : ProductWidget(
                                                 image: controller
+                                                    .mainController
                                                     .localProds[index]
                                                     .productImage,
                                                 title: controller
+                                                    .mainController
                                                     .localProds[index]
                                                     .productTitle,
                                                 price: controller
+                                                    .mainController
                                                     .localProds[index]
                                                     .productPrice,
-                                                id: controller.localProds[index]
+                                                id: controller
+                                                    .mainController
+                                                    .localProds[index]
                                                     .productId,
                                               );
                                     // return controller.localProds[index];

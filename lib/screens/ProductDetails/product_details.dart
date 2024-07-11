@@ -21,7 +21,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     Size size = MediaQuery.of(context).size;
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     SEarchController searchController = Get.put(SEarchController());
-    final productModel = searchController.findByProdId(productId);
+    final productModel =
+        searchController.mainController.findByProdId(productId);
     CartController cartController = Get.put(CartController());
     return Scaffold(
       appBar: AppBar(
@@ -93,18 +94,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                               height: kBottomNavigationBarHeight - 10,
                               child: ElevatedButton.icon(
                                 onPressed: () {
-                                  cartController.addToCart(
-                                      productId: productId);
+                                  cartController.mainController
+                                      .addToCart(productId: productId);
                                   cartController.update();
                                 },
                                 label: Text(
-                                  cartController.isAddedToCart(productId)
+                                  cartController.mainController
+                                          .isAddedToCart(productId)
                                       ? "In cart"
                                       : 'Add to cart',
                                   style: const TextStyle(color: Colors.white),
                                 ),
                                 icon: Icon(
-                                  cartController.isAddedToCart(productId)
+                                  cartController.mainController
+                                          .isAddedToCart(productId)
                                       ? Icons.check
                                       : Icons.add_shopping_cart,
                                   color: Colors.white,

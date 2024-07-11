@@ -5,12 +5,14 @@ import '../screens/HomeScreen/home_screen.dart';
 import '../screens/CartScreen/cart_screen.dart';
 import '../screens/ProfileScreen/profile_screen.dart';
 import '../screens/SearchScreen/search_screen.dart';
+import 'main_controller.dart';
 
 class RootController extends GetxController {
   CartController cartController = Get.put(CartController());
+  MainController mainController = Get.find();
 
   String getCartItemLength() {
-    return cartController.cartItem.length.toString();
+    return mainController.cartItem.length.toString();
   }
 
   late PageController
