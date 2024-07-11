@@ -1,7 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shop_smart/consts/assets.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
@@ -43,9 +42,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: FancyShimmerImage(
-                      imageUrl: getCurrProduct!.productImage ??
-                          AssetsPaths.productImageUrl,
-                      width: double.infinity,
+                      imageUrl: getCurrProduct!.productImage,
+
                       height: size.height * 0.2,
                     ),
                   ),
@@ -57,7 +55,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       Flexible(
                           flex: 5,
                           child: TitleTextWidget(
-                            label: getCurrProduct.productTitle ?? "title",
+                            label: getCurrProduct.productTitle ,
                             maxLines: 2,
                             fontSize: 18,
                           )),
