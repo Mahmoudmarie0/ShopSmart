@@ -5,6 +5,7 @@ import 'package:shop_smart/controller/home_controller.dart';
 import 'package:shop_smart/screens/HomeScreen/Widgets/ctg_rounded_widget.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 import '../../consts/assets.dart';
+import '../../controller/search_controller.dart';
 import '../../widgets/app_name_text.dart';
 import 'Widgets/latest_arrival_widget.dart';
 
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SEarchController searchController = Get.put(SEarchController());
     Size size = MediaQuery.of(context).size;
     return GetBuilder<HomeController>(
       init: HomeController(),
@@ -71,7 +73,15 @@ class HomeScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return const LatestArrivalProductWidget();
+                          return LatestArrivalProductWidget(
+                            image:
+                                searchController.localProds[index].productImage,
+                            title:
+                                searchController.localProds[index].productTitle,
+                            price:
+                                searchController.localProds[index].productPrice,
+                            id: searchController.localProds[index].productId,
+                          );
                         }),
                   ),
                   const SizedBox(

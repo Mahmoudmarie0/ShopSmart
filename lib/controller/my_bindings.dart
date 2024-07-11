@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shop_smart/controller/main_controller.dart';
 
-
 class MyBindings implements Bindings {
   @override
   void dependencies() {
