@@ -33,6 +33,8 @@ class _LatestArrivalProductWidgetState
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () async {
+                controller.viewedRecentlyController
+                    .addToViewedRecently(productId: widget.id.toString());
                 controller.mainController.findByProdId(widget.id!);
                 await Get.to(() => const ProductDetails(),
                     arguments: widget.id!);
@@ -68,7 +70,9 @@ class _LatestArrivalProductWidgetState
                             child: Row(
                               children: [
                                 // IconButton(onPressed: (){}, icon:const Icon(IconlyLight.heart)),
-                                const HeartButtonWidget(),
+                                HeartButtonWidget(
+                                  productId: widget.id.toString(),
+                                ),
                                 IconButton(
                                     onPressed: () {},
                                     icon: const Icon(

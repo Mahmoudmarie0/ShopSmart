@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
 import 'package:shop_smart/consts/assets.dart';
 import 'package:shop_smart/controller/search_controller.dart';
+import 'package:shop_smart/controller/viewed_recently_controller.dart';
 
 import '../models/cat_model.dart';
 import 'main_controller.dart';
 
 class HomeController extends GetxController {
   SEarchController searchController = SEarchController();
+  ViewedRecentlyController viewedRecentlyController =
+      Get.put(ViewedRecentlyController());
   MainController mainController = Get.find();
   List<String> bannersImage = [AssetsPaths.banner1, AssetsPaths.banner2];
   List<CategoryModel> categories = [

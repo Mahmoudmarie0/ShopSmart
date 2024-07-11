@@ -61,7 +61,9 @@ class CartWidget extends StatelessWidget {
                                   Icons.clear,
                                   color: Colors.red,
                                 )),
-                            const HeartButtonWidget(),
+                            HeartButtonWidget(
+                              productId: getCurrProduct.productId,
+                            ),
                           ],
                         ),
                       ],
@@ -104,7 +106,7 @@ class CartWidget extends StatelessWidget {
                             color: Colors.blue,
                           ),
                           label: Text(
-                            "Qty:${getCurrProduct.productQuantity}",
+                            "Qty:${cartModel.quantity}",
                             style: const TextStyle(color: Colors.blue),
                           ),
                         )

@@ -97,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                           imagePath: AssetsPaths.wishlistSvg,
                           text: "Wishlist",
                           function: () async {
-                            await Get.to(const WishlistScreen());
+                            await Get.to(() => const WishlistScreen());
                           }),
                       ListTileWidget(
                           imagePath: AssetsPaths.recent,
