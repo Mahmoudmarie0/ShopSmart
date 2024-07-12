@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/screens/SearchScreen/Widgets/products_widget.dart';
 import 'package:shop_smart/widgets/title_text.dart';
-import '../../consts/assets.dart';
 import '../../controller/search_controller.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -26,10 +25,10 @@ class SearchScreen extends StatelessWidget {
                   appBar: AppBar(
                     title:
                         TitleTextWidget(label: catId == "" ? "Search" : catId),
-                    leading: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(AssetsPaths.shoppingCart),
-                    ),
+                    // leading: Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Image.asset(AssetsPaths.shoppingCart),
+                    // ),
                   ),
                   body: Padding(
                     padding: const EdgeInsets.all(8.0),

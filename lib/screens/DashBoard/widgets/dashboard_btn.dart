@@ -5,9 +5,9 @@ import '../../../widgets/subtitle_text.dart';
 class DashboardButtonsWidget extends StatelessWidget {
   const DashboardButtonsWidget(
       {super.key,
-        required this.title,
-        required this.imagePath,
-        required this.onPressed});
+      required this.title,
+      required this.imagePath,
+      required this.onPressed});
 
   final String title, imagePath;
   final Function onPressed;
@@ -32,7 +32,8 @@ class DashboardButtonsWidget extends StatelessWidget {
             ),
             SubtitleTextWidget(
               label: title,
-              fontSize: 18, textDecorations: TextDecoration.none,
+              fontSize: 18,
+              textDecorations: TextDecoration.none,
             )
           ],
         ),

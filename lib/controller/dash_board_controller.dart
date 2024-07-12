@@ -8,16 +8,20 @@ import '../screens/OrderScreen/order_screen.dart';
 
 class DashBoardController extends GetxController {
   MainController mainController = Get.find();
-   List <DashBoardModel> dashBoard = [
-    DashBoardModel(title: 'Add a new product', image: AssetsPaths.cloud, onPressed: (){}),
-    DashBoardModel(title: 'inspect all products', image: AssetsPaths.shoppingCart, onPressed: (){
-      Get.to(const SearchScreen()) ;
-    }),
-    DashBoardModel(title: 'view orders', image: AssetsPaths.order, onPressed: (){
-      Get.to(const OrdersScreen()) ;
-    }),
+  List<DashBoardModel> dashBoard = [
+    DashBoardModel(
+        title: 'Add a new product', image: AssetsPaths.cloud, onPressed: () {}),
+    DashBoardModel(
+        title: 'inspect all products',
+        image: AssetsPaths.shoppingCart,
+        onPressed: () {
+          Get.to(const SearchScreen());
+        }),
+    DashBoardModel(
+        title: 'view orders',
+        image: AssetsPaths.order,
+        onPressed: () {
+          Get.to(const OrdersScreen());
+        }),
   ];
-
-
-
 }

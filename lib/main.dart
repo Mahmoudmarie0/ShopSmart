@@ -5,7 +5,6 @@ import 'package:shop_smart/controller/main_controller.dart';
 import 'package:shop_smart/controller/my_bindings.dart';
 import 'package:shop_smart/screens/DashBoard/view.dart';
 
-
 void main() {
   runApp(const MyApp());
 }

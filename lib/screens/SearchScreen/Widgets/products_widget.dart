@@ -41,7 +41,6 @@ class _ProductWidgetState extends State<ProductWidget> {
                     borderRadius: BorderRadius.circular(30),
                     child: FancyShimmerImage(
                       imageUrl: getCurrProduct!.productImage,
-
                       height: size.height * 0.2,
                     ),
                   ),
@@ -53,7 +52,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       Flexible(
                           flex: 5,
                           child: TitleTextWidget(
-                            label: getCurrProduct.productTitle ,
+                            label: getCurrProduct.productTitle,
                             maxLines: 2,
                             fontSize: 18,
                           )),

@@ -25,7 +25,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidget> {
             child: FancyShimmerImage(
               height: size.width * 0.25,
               width: size.width * 0.25,
-              imageUrl: AssetsPaths.cloud,
+              imageUrl: AssetsPaths.productImageUrl,
             ),
           ),
           Flexible(
