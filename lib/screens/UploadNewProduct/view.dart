@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -7,6 +6,7 @@ import 'package:shop_smart/widgets/title_text.dart';
 
 import '../../consts/my_validators.dart';
 import '../../controller/upload_new_product_controller.dart';
+import '../../widgets/pick_image_widget.dart';
 
 class UploadNewProductScreen extends StatelessWidget {
   const UploadNewProductScreen({super.key});
@@ -98,7 +98,28 @@ class UploadNewProductScreen extends StatelessWidget {
                         height: 20,
                       ),
                       /* Image picker here ***********************************/
-
+                      const PickImageWidget(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                controller.localImagePicker();
+                              },
+                              child: const Text("pick another image ",
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                  ))),
+                          TextButton(
+                              onPressed: () {
+                                controller.removeImage();
+                              },
+                              child: const Text("Remove image",
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ))),
+                        ],
+                      ),
                       const SizedBox(
                         height: 25,
                       ),
