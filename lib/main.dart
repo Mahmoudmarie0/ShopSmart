@@ -8,10 +8,11 @@ import 'package:shop_smart/firebase_options.dart';
 import 'package:shop_smart/screens/RootScreen/root_screen.dart';
 
 void main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(const MyApp());
 }
 
 MainController mainController = Get.put(MainController());

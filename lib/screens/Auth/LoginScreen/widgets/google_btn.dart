@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class GoogleButton extends StatelessWidget {
-  const GoogleButton({super.key});
-
+  const GoogleButton({super.key, this.onPressed});
+  final Function? onPressed;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () async {
+        onPressed!();
+
         //controller.login();
       },
       label: const Text(

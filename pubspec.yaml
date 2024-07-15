@@ -53,6 +53,7 @@ dependencies:
   intl: ^0.18.1
   firebase_messaging: ^14.7.21
   fluttertoast: ^8.2.6
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

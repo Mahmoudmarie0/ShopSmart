@@ -158,12 +158,15 @@ class LogInScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    const Expanded(
+                                    Expanded(
                                       flex: 2,
                                       child: SizedBox(
                                           height: kBottomNavigationBarHeight,
-                                          child:
-                                              FittedBox(child: GoogleButton())),
+                                          child: FittedBox(child: GoogleButton(
+                                            onPressed: () async {
+                                              controller.login();
+                                            },
+                                          ))),
                                     ),
                                     const SizedBox(
                                       width: 8,
