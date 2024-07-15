@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:image_picker/image_picker.dart';
+import '../screens/RootScreen/root_screen.dart';
 import '../widgets/show_dialog_widget.dart';
 
 class RegisterController extends GetxController {
@@ -70,10 +72,12 @@ class RegisterController extends GetxController {
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
-        // Fluttertoast.showToast(
-        //     msg: "Account created successfully",
-        //     textColor: Colors.white,
-        // );
+        Fluttertoast.showToast(
+          msg: "Account created successfully",
+          textColor: Colors.white,
+        );
+
+        Get.to(() => const RootScreen());
       } on FirebaseAuthException catch (e) {
         ShowDialogWidget.showErrorORWarningDialog(
             context: Get.context!,

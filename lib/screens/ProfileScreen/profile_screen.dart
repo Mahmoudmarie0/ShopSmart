@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/consts/assets.dart';
@@ -144,7 +145,10 @@ class ProfileScreen extends StatelessWidget {
                             context: context,
                             subtitle: "Are you sure you want to logout?",
                             isError: false,
-                            fct: () {});
+                            fct: () async {
+                              await FirebaseAuth.instance.signOut();
+                              Get.offAll(() => const LogInScreen());
+                            });
 
 //await Get.to(const LogInScreen());
                   },
