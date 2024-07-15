@@ -80,7 +80,10 @@ class RegisterController extends GetxController {
             subtitle: "An error occured ${e.message}",
             fct: () {});
         print(e);
-      } finally {}
+      } finally {
+        isloading = false;
+        update();
+      }
     }
     // formKey.currentState!.save();
   }

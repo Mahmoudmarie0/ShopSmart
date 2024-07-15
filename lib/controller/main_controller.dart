@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -9,6 +10,7 @@ class MainController extends GetxController {
   static const THEME_STATUS = "THEME_STATUS";
   bool _darkTheme = false;
   bool get getIsDarkTheme => _darkTheme;
+  User? user = FirebaseAuth.instance.currentUser;
 
   MainController() {
     //to save the theme value
