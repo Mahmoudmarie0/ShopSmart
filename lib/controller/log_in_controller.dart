@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -72,36 +73,82 @@ class LogInController extends GetxController {
     // formKey.currentState!.save();
   }
 
+  // Future<void> signWithGoogle() async {
+  //   final googleSignIn = GoogleSignIn();
+  //   final googleAccount = await googleSignIn.signIn();
+  //   if (googleAccount != null) {
+  //     final googleAuth = await googleAccount.authentication;
+  //     if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+  //       try {
+  //         await FirebaseAuth.instance.signInWithCredential(
+  //           GoogleAuthProvider.credential(
+  //             idToken: googleAuth.idToken,
+  //             accessToken: googleAuth.accessToken,
+  //           ),
+  //         );
+  //
+  //         Fluttertoast.showToast(
+  //           msg: "Logged in successfully",
+  //           textColor: Colors.white,
+  //         );
+  //         Get.to(() => const RootScreen());
+  //       } on FirebaseAuthException catch (e) {
+  //         ShowDialogWidget.showErrorORWarningDialog(
+  //             context: Get.context!,
+  //             subtitle: "An error occured ${e.message}",
+  //             fct: () {});
+  //         print(e);
+  //       }
+  //     }
+  //   }
+  //
+  //   await FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider());
+  //   Get.to(() => const RootScreen());
+  // }
   Future<void> signWithGoogle() async {
     final googleSignIn = GoogleSignIn();
-    final googleAccount = await googleSignIn.signIn();
-    if (googleAccount != null) {
-      final googleAuth = await googleAccount.authentication;
-      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
-        try {
-          await FirebaseAuth.instance.signInWithCredential(
-            GoogleAuthProvider.credential(
-              idToken: googleAuth.idToken,
-              accessToken: googleAuth.accessToken,
-            ),
-          );
+    try {
+      final googleAccount = await googleSignIn.signIn();
+      if (googleAccount != null) {
+        final googleAuth = await googleAccount.authentication;
+        if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+          try {
+            await FirebaseAuth.instance.signInWithCredential(
+              GoogleAuthProvider.credential(
+                idToken: googleAuth.idToken,
+                accessToken: googleAuth.accessToken,
+              ),
+            );
 
-          Fluttertoast.showToast(
-            msg: "Logged in successfully",
-            textColor: Colors.white,
-          );
-          Get.to(() => const RootScreen());
-        } on FirebaseAuthException catch (e) {
-          ShowDialogWidget.showErrorORWarningDialog(
+            Fluttertoast.showToast(
+              msg: "Logged in successfully",
+              textColor: Colors.white,
+            );
+            Get.to(() => const RootScreen());
+          } on FirebaseAuthException catch (e) {
+            ShowDialogWidget.showErrorORWarningDialog(
               context: Get.context!,
-              subtitle: "An error occured ${e.message}",
-              fct: () {});
-          print(e);
+              subtitle: "An error occurred: ${e.message}",
+              fct: () {},
+            );
+            print(e);
+          }
         }
       }
+    } on PlatformException catch (e) {
+      ShowDialogWidget.showErrorORWarningDialog(
+        context: Get.context!,
+        subtitle: "An error occurred: ${e.message}",
+        fct: () {},
+      );
+      print(e);
+    } catch (e) {
+      ShowDialogWidget.showErrorORWarningDialog(
+        context: Get.context!,
+        subtitle: "An unexpected error occurred: ${e.toString()}",
+        fct: () {},
+      );
+      print(e);
     }
-
-    await FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider());
-    Get.to(() => const RootScreen());
   }
 }
