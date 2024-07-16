@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -72,6 +73,17 @@ class RegisterController extends GetxController {
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
+        User user = FirebaseAuth.instance.currentUser!;
+        final uid = user.uid;
+        await FirebaseFirestore.instance.collection("users").doc(uid).set({
+          'userId': uid,
+          'userName': usernameController.text,
+          'userImage': '',
+          'userEmail': emailController.text.toLowerCase(),
+          'createdAt': Timestamp.now(),
+          'userCart': [],
+          'userWish': [],
+        });
         Fluttertoast.showToast(
           msg: "Account created successfully",
           textColor: Colors.white,
