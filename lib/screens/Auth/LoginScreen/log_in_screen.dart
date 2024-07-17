@@ -7,6 +7,7 @@ import 'package:shop_smart/widgets/loading_manager.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 import '../../../controller/log_in_controller.dart';
+import '../../RootScreen/root_screen.dart';
 import '../ForgotPasswordScreen/forgot_password_screen.dart';
 import '../RegisterScreen/view.dart';
 import 'widgets/google_btn.dart';
@@ -182,7 +183,7 @@ class LogInScreen extends StatelessWidget {
                                           height: kBottomNavigationBarHeight,
                                           child: ElevatedButton(
                                             onPressed: () async {
-                                              controller.login();
+                                              Get.to(const RootScreen());
                                             },
                                             style: ElevatedButton.styleFrom(
                                                 padding:

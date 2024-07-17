@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 import 'package:shop_smart/consts/assets.dart';
 import 'package:shop_smart/screens/ViewedRecentlyScreen/viewed_recently_screen.dart';
 import 'package:shop_smart/widgets/list_tile.dart';
+import 'package:shop_smart/widgets/loading_manager.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
-
-import '../../controller/main_controller.dart';
+import '../../controller/profile_controller.dart';
 import '../../widgets/app_name_text.dart';
 import '../../widgets/show_dialog_widget.dart';
 import '../Auth/LoginScreen/log_in_screen.dart';
@@ -19,8 +19,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MainController>(
-      init: MainController(),
+    return GetBuilder<ProfileController>(
+      init: ProfileController(),
       builder: (controller) => Scaffold(
           appBar: AppBar(
             title: const AppNameTextWidgets(
@@ -31,138 +31,153 @@ class ProfileScreen extends StatelessWidget {
               child: Image.asset(AssetsPaths.shoppingCart),
             ),
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Visibility(
-                  visible: false,
-                  child: Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: TitleTextWidget(
-                        label: "Please login to have ultimate access"),
+          body: LoadingManager(
+            isLoading: controller.isLoading,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Visibility(
+                    visible: controller.user != null ? false : true,
+                    child: const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: TitleTextWidget(
+                          label: "Please login to have ultimate access"),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).cardColor,
-                            border: Border.all(
-                                color: Theme.of(context).colorScheme.surface,
-                                width: 3),
-                            image: const DecorationImage(
-                              image: NetworkImage(
-                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  controller.getUserModel == null
+                      ? const SizedBox()
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 60,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).cardColor,
+                                    border: Border.all(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surface,
+                                        width: 3),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        controller.userModel!.userImage,
+                                      ),
+                                      fit: BoxFit.fill,
+                                    )),
                               ),
-                              fit: BoxFit.fill,
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TitleTextWidget(label: "Mahmoud Marie"),
-                          SubtitleTextWidget(
-                            label: "mahmoudmarie500@gmail.com",
-                            textDecorations: TextDecoration.none,
+                              const SizedBox(
+                                width: 7,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TitleTextWidget(
+                                      label: controller.userModel!.userName),
+                                  SubtitleTextWidget(
+                                    label: controller.userModel!.userEmail,
+                                    textDecorations: TextDecoration.none,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const TitleTextWidget(label: "General"),
+                        ListTileWidget(
+                            imagePath: AssetsPaths.orderSvg,
+                            text: "All Orders",
+                            function: () {
+                              Get.to(const OrdersScreen());
+                            }),
+                        ListTileWidget(
+                            imagePath: AssetsPaths.wishlistSvg,
+                            text: "Wishlist",
+                            function: () async {
+                              await Get.to(() => const WishlistScreen());
+                            }),
+                        ListTileWidget(
+                            imagePath: AssetsPaths.recent,
+                            text: "Viewed recently",
+                            function: () async {
+                              await Get.to(const ViewedRecentlyScreen());
+                            }),
+                        ListTileWidget(
+                            imagePath: AssetsPaths.address,
+                            text: "Address",
+                            function: () {}),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        const TitleTextWidget(label: "Settings"),
+                        const SizedBox(
+                          height: 7,
+                        ),
+                        SwitchListTile(
+                            secondary: Image.asset(
+                              AssetsPaths.theme,
+                              height: 30,
+                            ),
+                            title: controller.mainController.getIsDarkTheme
+                                ? const Text('Dark mode')
+                                : const Text('Light mode'),
+                            value: controller.mainController.getIsDarkTheme,
+                            onChanged: (value) {
+                              controller.mainController
+                                  .setDarkTheme(themeValue: value);
+                              controller.update();
+                            }),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const TitleTextWidget(label: "General"),
-                      ListTileWidget(
-                          imagePath: AssetsPaths.orderSvg,
-                          text: "All Orders",
-                          function: () {
-                            Get.to(const OrdersScreen());
-                          }),
-                      ListTileWidget(
-                          imagePath: AssetsPaths.wishlistSvg,
-                          text: "Wishlist",
-                          function: () async {
-                            await Get.to(() => const WishlistScreen());
-                          }),
-                      ListTileWidget(
-                          imagePath: AssetsPaths.recent,
-                          text: "Viewed recently",
-                          function: () async {
-                            await Get.to(const ViewedRecentlyScreen());
-                          }),
-                      ListTileWidget(
-                          imagePath: AssetsPaths.address,
-                          text: "Address",
-                          function: () {}),
-                      const Divider(
-                        thickness: 1,
-                      ),
-                      const TitleTextWidget(label: "Settings"),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      SwitchListTile(
-                          secondary: Image.asset(
-                            AssetsPaths.theme,
-                            height: 30,
-                          ),
-                          title: controller.getIsDarkTheme
-                              ? const Text('Dark mode')
-                              : const Text('Light mode'),
-                          value: controller.getIsDarkTheme,
-                          onChanged: (value) {
-                            controller.setDarkTheme(themeValue: value);
-                          }),
-                      const Divider(
-                        thickness: 1,
-                      ),
-                    ],
-                  ),
-                ),
-                Center(
-                    child: ElevatedButton.icon(
-                  onPressed: () async {
-                    controller.user == null
-                        ? await Get.to(const LogInScreen())
-                        : await ShowDialogWidget.showErrorORWarningDialog(
-                            context: context,
-                            subtitle: "Are you sure you want to logout?",
-                            isError: false,
-                            fct: () async {
-                              await FirebaseAuth.instance.signOut();
-                              Get.offAll(() => const LogInScreen());
-                            });
+                  Center(
+                      child: ElevatedButton.icon(
+                    onPressed: () async {
+                      controller.mainController.user == null
+                          ? await Get.to(const LogInScreen())
+                          : await ShowDialogWidget.showErrorORWarningDialog(
+                              context: context,
+                              subtitle: "Are you sure you want to logout?",
+                              isError: false,
+                              fct: () async {
+                                await FirebaseAuth.instance.signOut();
+                                Get.offAll(() => const LogInScreen());
+                              });
 
-//await Get.to(const LogInScreen());
-                  },
-                  label: Text(
-                    controller.user == null ? 'Login' : 'Logout',
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  icon: Icon(
-                    controller.user == null ? Icons.login : Icons.logout,
-                    color: Colors.white,
-                  ),
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                ))
-              ],
+                      //await Get.to(const LogInScreen());
+                    },
+                    label: Text(
+                      controller.mainController.user == null
+                          ? 'Login'
+                          : 'Logout',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    icon: Icon(
+                      controller.mainController.user == null
+                          ? Icons.login
+                          : Icons.logout,
+                      color: Colors.white,
+                    ),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                  ))
+                ],
+              ),
             ),
           )),
     );
