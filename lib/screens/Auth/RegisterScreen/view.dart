@@ -180,7 +180,7 @@ class RegisterScreen extends StatelessWidget {
                                 width: double.infinity,
                                 child: ElevatedButton.icon(
                                   onPressed: () async {
-                                    controller.register();
+                                    await controller.register();
                                   },
                                   icon: const Icon(
                                     IconlyLight.add_user,

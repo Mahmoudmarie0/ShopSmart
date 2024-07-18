@@ -1,13 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
 import '../screens/RootScreen/root_screen.dart';
 import '../widgets/show_dialog_widget.dart';
 
@@ -24,6 +24,7 @@ class RegisterController extends GetxController {
   bool obsecureText = true;
   bool isloading = false;
   XFile? pickedImage;
+  String? userImageUrl;
 
   @override
   void onInit() {
@@ -58,15 +59,24 @@ class RegisterController extends GetxController {
   Future<void> register() async {
     final isValid = formKey.currentState!.validate();
     FocusScope.of(Get.context!).unfocus();
+    if (pickedImage == null) {
+      ShowDialogWidget.showErrorORWarningDialog(
+          context: Get.context!,
+          subtitle: 'Make sure you pick an image',
+          fct: () {});
+      return;
+    }
     if (isValid) {
       formKey.currentState!.save();
-      // if (pickedImage == null) {
-      //   ShowDialogWidget.showErrorORWarningDialog(
-      //       context: Get.context!,
-      //       subtitle: 'Make sure you pick an image',
-      //       fct: () {});
-      // }
+
       try {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child("usersImages")
+            .child("${emailController.text.trim()}.jpg");
+
+        await ref.putFile(File(pickedImage!.path));
+        userImageUrl = await ref.getDownloadURL();
         isloading = true;
         update();
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -78,7 +88,7 @@ class RegisterController extends GetxController {
         await FirebaseFirestore.instance.collection("users").doc(uid).set({
           'userId': uid,
           'userName': usernameController.text,
-          'userImage': '',
+          'userImage': userImageUrl,
           'userEmail': emailController.text.toLowerCase(),
           'createdAt': Timestamp.now(),
           'userCart': [],
@@ -95,7 +105,6 @@ class RegisterController extends GetxController {
             context: Get.context!,
             subtitle: "An error occured ${e.message}",
             fct: () {});
-        print(e);
       } finally {
         isloading = false;
         update();
@@ -103,10 +112,6 @@ class RegisterController extends GetxController {
     }
     // formKey.currentState!.save();
   }
-
-//   cameraFCT: () {},
-// galleryFCT: () {},
-// removeFCT: () {},
 
   Future<void> localImagePicker() async {
     final ImagePicker picker = ImagePicker();
