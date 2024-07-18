@@ -1,11 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/consts/theme_data.dart';
 import 'package:shop_smart/controller/main_controller.dart';
 import 'package:shop_smart/controller/my_bindings.dart';
+import 'package:shop_smart/firebase_options.dart';
 import 'package:shop_smart/screens/DashBoard/view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
