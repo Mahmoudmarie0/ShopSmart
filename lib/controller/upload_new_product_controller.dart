@@ -1,4 +1,10 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -78,29 +84,85 @@ class UploadNewProductController extends GetxController {
     pickedImage = null;
     update();
   }
+  //
+  // Future<void> uploadProduct() async {
+  //   //final isValid = formKey.currentState!.validate();
+  //   // FocusScope.of(Get.context!).unfocus();
+  //   // if (categoryValue == null) {
+  //   //   ShowDialogWidget.showErrorORWarningDialog(
+  //   //       context: Get.context!,
+  //   //       subtitle: 'Please select a category',
+  //   //       fct: () {});
+  //   //   return;
+  //   // }
+  //   // final isValid = formKey.currentState!.validate();
+  //   //
+  //   // if (isValid) {
+  //   //   formKey.currentState!.save();
+  //   //   if (pickedImage == null) {
+  //   //     ShowDialogWidget.showErrorORWarningDialog(
+  //   //         context: Get.context!,
+  //   //         subtitle: 'Make sure you pick an image',
+  //   //         fct: () {});
+  //   //   }
+  //   // }
+
+  // }
 
   Future<void> uploadProduct() async {
-    //final isValid = formKey.currentState!.validate();
+    final isValid = formKey.currentState!.validate();
     FocusScope.of(Get.context!).unfocus();
-    if (categoryValue == null) {
+    if (pickedImage == null) {
       ShowDialogWidget.showErrorORWarningDialog(
           context: Get.context!,
-          subtitle: 'Please select a category',
+          subtitle: 'Make sure you pick an image',
           fct: () {});
       return;
     }
-    final isValid = formKey.currentState!.validate();
-
     if (isValid) {
       formKey.currentState!.save();
-      if (pickedImage == null) {
+
+      try {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child("usersImages")
+            .child("${emailController.text.trim()}.jpg");
+
+        await ref.putFile(File(pickedImage!.path));
+        userImageUrl = await ref.getDownloadURL();
+        isloading = true;
+        update();
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+        User user = FirebaseAuth.instance.currentUser!;
+        final uid = user.uid;
+        await FirebaseFirestore.instance.collection("users").doc(uid).set({
+          'userId': uid,
+          'userName': usernameController.text,
+          'userImage': userImageUrl,
+          'userEmail': emailController.text.toLowerCase(),
+          'createdAt': Timestamp.now(),
+          'userCart': [],
+          'userWish': [],
+        });
+        Fluttertoast.showToast(
+          msg: "Account created successfully",
+          textColor: Colors.white,
+        );
+
+        Get.to(() => const RootScreen());
+      } on FirebaseAuthException catch (e) {
         ShowDialogWidget.showErrorORWarningDialog(
             context: Get.context!,
-            subtitle: 'Make sure you pick an image',
+            subtitle: "An error occured ${e.message}",
             fct: () {});
+      } finally {
+        isloading = false;
+        update();
       }
     }
-    // formKey.currentState!.save();
   }
 
   List<String> categoriesList = [

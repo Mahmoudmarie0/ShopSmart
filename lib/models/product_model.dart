@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProductModel {
   final String productId,
       productTitle,
@@ -6,6 +8,7 @@ class ProductModel {
       productDescription,
       productImage,
       productQuantity;
+  Timestamp? timestamp;
 
   ProductModel(
       {required this.productId,
@@ -14,5 +17,6 @@ class ProductModel {
       required this.productCategory,
       required this.productDescription,
       required this.productImage,
-      required this.productQuantity});
+      required this.productQuantity,
+      this.timestamp});
 }
