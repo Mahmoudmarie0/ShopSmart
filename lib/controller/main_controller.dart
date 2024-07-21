@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,8 +10,10 @@ import '../models/product_model.dart';
 class MainController extends GetxController {
   static const THEME_STATUS = "THEME_STATUS";
   bool _darkTheme = false;
+
   bool get getIsDarkTheme => _darkTheme;
   User? user = FirebaseAuth.instance.currentUser;
+  List<ProductModel> products = [];
 
   MainController() {
     //to save the theme value
@@ -43,6 +46,24 @@ class MainController extends GetxController {
     }
 
     return localProds.firstWhere((element) => element.productId == prodId);
+  }
+
+  final productDB = FirebaseFirestore.instance.collection("products");
+
+  Future<List<ProductModel>> fetchProducts() async {
+    try {
+      await productDB.get().then((productsSnapshot) {
+        for (var element in productsSnapshot.docs) {
+          products.insert(
+            0,
+            ProductModel.fromFirestore(element),
+          );
+        }
+      });
+      return products;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   List<ProductModel> localProds = [
@@ -235,5 +256,12 @@ class MainController extends GetxController {
 
   bool isAddedToCart(String productId) {
     return cartItem.containsKey(productId);
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    fetchProducts();
   }
 }

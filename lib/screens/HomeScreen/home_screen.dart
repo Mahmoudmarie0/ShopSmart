@@ -67,23 +67,29 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(
                     height: 18,
                   ),
-                  SizedBox(
-                    height: size.height * 0.2,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return LatestArrivalProductWidget(
-                            image: searchController
-                                .mainController.localProds[index].productImage,
-                            title: searchController
-                                .mainController.localProds[index].productTitle,
-                            price: searchController
-                                .mainController.localProds[index].productPrice,
-                            id: searchController
-                                .mainController.localProds[index].productId,
-                          );
-                        }),
+                  Visibility(
+                    visible: searchController.mainController.localProds.isEmpty
+                        ? false
+                        : true,
+                    child: SizedBox(
+                      height: size.height * 0.2,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount:
+                              searchController.mainController.products.length,
+                          itemBuilder: (context, index) {
+                            return LatestArrivalProductWidget(
+                              image: searchController
+                                  .mainController.products[index].productImage,
+                              title: searchController
+                                  .mainController.products[index].productTitle,
+                              price: searchController
+                                  .mainController.products[index].productPrice,
+                              id: searchController
+                                  .mainController.products[index].productId,
+                            );
+                          }),
+                    ),
                   ),
                   const SizedBox(
                     height: 18,
