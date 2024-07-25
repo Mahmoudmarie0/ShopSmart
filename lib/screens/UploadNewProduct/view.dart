@@ -129,6 +129,7 @@ class UploadNewProductScreen extends StatelessWidget {
                           items: controller.categoriesDropdownList,
                           onChanged: (String? value) {
                             controller.categoryValue = value!;
+                            controller.update();
                           }),
                       const SizedBox(
                         height: 25,

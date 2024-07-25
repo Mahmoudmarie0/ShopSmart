@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 import '../widgets/show_dialog_widget.dart';
 
@@ -22,6 +22,8 @@ class UploadNewProductController extends GetxController {
   late final FocusNode descriptionFocusNode;
   late final formKey = GlobalKey<FormState>();
   String? categoryValue;
+  bool _isLoading = false;
+  String? productNetworkImage;
 
   @override
   void onInit() {
@@ -84,82 +86,81 @@ class UploadNewProductController extends GetxController {
     pickedImage = null;
     update();
   }
-  //
-  // Future<void> uploadProduct() async {
-  //   //final isValid = formKey.currentState!.validate();
-  //   // FocusScope.of(Get.context!).unfocus();
-  //   // if (categoryValue == null) {
-  //   //   ShowDialogWidget.showErrorORWarningDialog(
-  //   //       context: Get.context!,
-  //   //       subtitle: 'Please select a category',
-  //   //       fct: () {});
-  //   //   return;
-  //   // }
-  //   // final isValid = formKey.currentState!.validate();
-  //   //
-  //   // if (isValid) {
-  //   //   formKey.currentState!.save();
-  //   //   if (pickedImage == null) {
-  //   //     ShowDialogWidget.showErrorORWarningDialog(
-  //   //         context: Get.context!,
-  //   //         subtitle: 'Make sure you pick an image',
-  //   //         fct: () {});
-  //   //   }
-  //   // }
-
-  // }
 
   Future<void> uploadProduct() async {
     final isValid = formKey.currentState!.validate();
     FocusScope.of(Get.context!).unfocus();
     if (pickedImage == null) {
       ShowDialogWidget.showErrorORWarningDialog(
-          context: Get.context!,
-          subtitle: 'Make sure you pick an image',
-          fct: () {});
+        context: Get.context!,
+        subtitle: "Make sure to pick up an image",
+        fct: () {},
+      );
+      return;
+    }
+    if (categoryValue == null) {
+      ShowDialogWidget.showErrorORWarningDialog(
+        context: Get.context!,
+        subtitle: "Category is empty",
+        fct: () {},
+      );
+
       return;
     }
     if (isValid) {
       formKey.currentState!.save();
-
       try {
+        _isLoading = true;
+        update();
+
         final ref = FirebaseStorage.instance
             .ref()
-            .child("usersImages")
-            .child("${emailController.text.trim()}.jpg");
-
+            .child("productsImages")
+            .child('${titleController.text.trim()}.jpg');
         await ref.putFile(File(pickedImage!.path));
-        userImageUrl = await ref.getDownloadURL();
-        isloading = true;
-        update();
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
-        User user = FirebaseAuth.instance.currentUser!;
-        final uid = user.uid;
-        await FirebaseFirestore.instance.collection("users").doc(uid).set({
-          'userId': uid,
-          'userName': usernameController.text,
-          'userImage': userImageUrl,
-          'userEmail': emailController.text.toLowerCase(),
+        productNetworkImage = await ref.getDownloadURL();
+
+        final productID = const Uuid().v4();
+        await FirebaseFirestore.instance
+            .collection("products")
+            .doc(productID)
+            .set({
+          'productId': productID,
+          'productTitle': titleController.text,
+          'productPrice': priceController.text,
+          'productImage': productNetworkImage,
+          'productCategory': categoryValue,
+          'productDescription': descriptionController.text,
+          'productQuantity': quantityController.text,
           'createdAt': Timestamp.now(),
-          'userCart': [],
-          'userWish': [],
         });
         Fluttertoast.showToast(
-          msg: "Account created successfully",
+          msg: "Product has been added",
+          toastLength: Toast.LENGTH_SHORT,
           textColor: Colors.white,
         );
-
-        Get.to(() => const RootScreen());
-      } on FirebaseAuthException catch (e) {
-        ShowDialogWidget.showErrorORWarningDialog(
-            context: Get.context!,
-            subtitle: "An error occured ${e.message}",
-            fct: () {});
+        await ShowDialogWidget.showErrorORWarningDialog(
+          isError: false,
+          context: Get.context!,
+          subtitle: "Clear form?",
+          fct: () {
+            clearText();
+          },
+        );
+      } on FirebaseException catch (error) {
+        await ShowDialogWidget.showErrorORWarningDialog(
+          context: Get.context!,
+          subtitle: "An error has been occured ${error.message}",
+          fct: () {},
+        );
+      } catch (error) {
+        await ShowDialogWidget.showErrorORWarningDialog(
+          context: Get.context!,
+          subtitle: "An error has been occured $error",
+          fct: () {},
+        );
       } finally {
-        isloading = false;
+        _isLoading = false;
         update();
       }
     }
