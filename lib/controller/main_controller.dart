@@ -53,6 +53,7 @@ class MainController extends GetxController {
   Future<List<ProductModel>> fetchProducts() async {
     try {
       await productDB.get().then((productsSnapshot) {
+        products.clear();
         for (var element in productsSnapshot.docs) {
           products.insert(
             0,
@@ -64,6 +65,21 @@ class MainController extends GetxController {
     } catch (e) {
       rethrow;
     }
+  }
+
+  List<ProductModel> product = []; // Initialize a new list for each snapshot
+  Stream<List<ProductModel>> fetchProductsAsStream() {
+    return productDB.snapshots().map((snapshot) {
+      product.clear();
+      for (var element in snapshot.docs) {
+        product.add(ProductModel.fromFirestore(element));
+      }
+      return product;
+    }).handleError((e) {
+      // Handle or log the error
+      print('Error fetching products: $e');
+      return <ProductModel>[]; // Return an empty list on error
+    });
   }
 
   // List<ProductModel> localProds = [
