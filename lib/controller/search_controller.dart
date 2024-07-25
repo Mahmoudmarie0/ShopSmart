@@ -30,7 +30,7 @@ class SEarchController extends GetxController {
   }
 
   List<ProductModel> findByCategory({required String ctgId}) {
-    List<ProductModel> ctgList = mainController.localProds
+    List<ProductModel> ctgList = mainController.product
         .where((element) =>
             element.productCategory.toLowerCase().contains(ctgId.toLowerCase()))
         .toList();
