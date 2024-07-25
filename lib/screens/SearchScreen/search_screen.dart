@@ -93,7 +93,7 @@ class SearchScreen extends StatelessWidget {
                                       : catId.isNotEmpty
                                           ? productModel.length
                                           : controller
-                                              .mainController.localProds.length,
+                                              .mainController.products.length,
                                   crossAxisCount: 2,
                                   builder: (context, index) {
                                     return controller
@@ -142,20 +142,18 @@ class SearchScreen extends StatelessWidget {
                                             : ProductWidget(
                                                 image: controller
                                                     .mainController
-                                                    .localProds[index]
+                                                    .products[index]
                                                     .productImage,
                                                 title: controller
                                                     .mainController
-                                                    .localProds[index]
+                                                    .products[index]
                                                     .productTitle,
                                                 price: controller
                                                     .mainController
-                                                    .localProds[index]
+                                                    .products[index]
                                                     .productPrice,
-                                                id: controller
-                                                    .mainController
-                                                    .localProds[index]
-                                                    .productId,
+                                                id: controller.mainController
+                                                    .products[index].productId,
                                               );
                                     // return controller.localProds[index];
                                   },

@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                     height: 18,
                   ),
                   Visibility(
-                    visible: searchController.mainController.localProds.isEmpty
+                    visible: searchController.mainController.products.isEmpty
                         ? false
                         : true,
                     child: SizedBox(
