@@ -52,7 +52,10 @@ class MainController extends GetxController {
 
   Future<List<ProductModel>> fetchProducts() async {
     try {
-      await productDB.get().then((productsSnapshot) {
+      await productDB
+          .orderBy("createdAt", descending: false)
+          .get()
+          .then((productsSnapshot) {
         products.clear();
         for (var element in productsSnapshot.docs) {
           products.insert(
