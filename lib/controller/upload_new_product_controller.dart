@@ -8,9 +8,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
+import '../models/product_model.dart';
 import '../widgets/show_dialog_widget.dart';
 
-class UploadNewProductController extends GetxController {
+class UploadOrEditProductController extends GetxController {
+  UploadOrEditProductController({this.productModel});
   XFile? pickedImage;
   late TextEditingController titleController;
   late TextEditingController priceController;
@@ -21,17 +23,24 @@ class UploadNewProductController extends GetxController {
   late final FocusNode quantityFocusNode;
   late final FocusNode descriptionFocusNode;
   late final formKey = GlobalKey<FormState>();
+  bool isEditing = false;
   String? categoryValue;
   bool _isLoading = false;
   String? productNetworkImage;
-
+  late final ProductModel? productModel;
+  String? image;
   @override
   void onInit() {
     // TODO: implement onInit
-    titleController = TextEditingController();
-    priceController = TextEditingController();
-    quantityController = TextEditingController();
-    descriptionController = TextEditingController();
+    titleController =
+        TextEditingController(text: productModel?.productTitle ?? "");
+    priceController =
+        TextEditingController(text: productModel?.productPrice ?? "");
+    quantityController =
+        TextEditingController(text: productModel?.productQuantity ?? "");
+    descriptionController =
+        TextEditingController(text: productModel?.productDescription ?? "");
+    image = productModel?.productImage ?? "";
     titleFocusNode = FocusNode();
     priceFocusNode = FocusNode();
     quantityFocusNode = FocusNode();
@@ -185,6 +194,98 @@ class UploadNewProductController extends GetxController {
       ),
     );
     return menuItems;
+  }
+
+  Future<void> editProduct() async {
+    final isValid = formKey.currentState!.validate();
+    FocusScope.of(Get.context!).unfocus();
+    // if (pickedImage == null && productNetworkImage == null) {
+    //   ShowDialogWidget.showErrorORWarningDialog(
+    //     context: Get.context!,
+    //     subtitle: "Please pick up an image",
+    //     fct: () {},
+    //   );
+    //   return;
+    // }
+    if (categoryValue == null) {
+      ShowDialogWidget.showErrorORWarningDialog(
+        context: Get.context!,
+        subtitle: "Category is empty",
+        fct: () {},
+      );
+
+      return;
+    }
+    if (isValid) {
+      formKey.currentState!.save();
+      try {
+        _isLoading = true;
+        update();
+
+        if (pickedImage != null) {
+          final ref = FirebaseStorage.instance
+              .ref()
+              .child("productsImages")
+              .child('${titleController.text.trim()}.jpg');
+          await ref.putFile(File(pickedImage!.path));
+          productNetworkImage = await ref.getDownloadURL();
+        }
+
+        await FirebaseFirestore.instance
+            .collection("products")
+            .doc(productModel!.productId)
+            .update({
+          'productId': productModel!.productId,
+          'productTitle': titleController.text,
+          'productPrice': priceController.text,
+          'productImage': pickedImage ?? image,
+          'productCategory': categoryValue,
+          'productDescription': descriptionController.text,
+          'productQuantity': quantityController.text,
+          'createdAt': productModel!.createdAt,
+        });
+        Fluttertoast.showToast(
+          msg: "Product has been edited",
+          toastLength: Toast.LENGTH_SHORT,
+          textColor: Colors.white,
+        );
+
+        await ShowDialogWidget.showErrorORWarningDialog(
+          isError: false,
+          context: Get.context!,
+          subtitle: "Clear form?",
+          fct: () {
+            clearForm();
+          },
+        );
+      } on FirebaseException catch (error) {
+        await ShowDialogWidget.showErrorORWarningDialog(
+          context: Get.context!,
+          subtitle: "An error has been occured ${error.message}",
+          fct: () {},
+        );
+      } catch (error) {
+        await ShowDialogWidget.showErrorORWarningDialog(
+          context: Get.context!,
+          subtitle: "An error has been occured $error",
+          fct: () {},
+        );
+      } finally {
+        _isLoading = false;
+        update();
+      }
+    }
+  }
+
+  clearForm() {
+    pickedImage = null;
+    productNetworkImage = null;
+    titleController.clear();
+    priceController.clear();
+    descriptionController.clear();
+    quantityController.clear();
+    categoryValue = null;
+    update();
   }
 
 //List<DropdownMenuItem<Object>>? items

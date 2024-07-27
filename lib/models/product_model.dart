@@ -8,7 +8,7 @@ class ProductModel {
       productDescription,
       productImage,
       productQuantity;
-  Timestamp? timestamp;
+  Timestamp? createdAt;
 
   ProductModel(
       {required this.productId,
@@ -18,5 +18,21 @@ class ProductModel {
       required this.productDescription,
       required this.productImage,
       required this.productQuantity,
-      this.timestamp});
+      this.createdAt});
+
+  factory ProductModel.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map<String, dynamic>;
+    return ProductModel(
+      productId: data['productId'],
+      productTitle: data['productTitle'],
+      productPrice: data['productPrice'],
+      productCategory: data['productTitle'],
+
+      ///wroooongggg
+      productDescription: data['productDescription'],
+      productImage: data['productImage'],
+      productQuantity: data['productQuantity'],
+      createdAt: data['createdAt'],
+    );
+  }
 }

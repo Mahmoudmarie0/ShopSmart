@@ -1,10 +1,12 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_smart/screens/UploadNewProduct/view.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
 import '../../../controller/search_controller.dart';
+import '../../../models/product_model.dart';
 import '../../../widgets/heart_btn.dart';
 
 class ProductWidget extends StatefulWidget {
@@ -22,6 +24,7 @@ class _ProductWidgetState extends State<ProductWidget> {
     final getCurrProduct =
         controller.mainController.findByProdId(widget.id.toString());
     Size size = MediaQuery.of(context).size;
+    final ProductModel? productModel;
 
     return GetBuilder<SEarchController>(
         init: SEarchController(),
@@ -33,6 +36,20 @@ class _ProductWidgetState extends State<ProductWidget> {
                 controller.viewedRecentlyController.addToViewedRecently(
                     productId: getCurrProduct.productId.toString());
                 controller.mainController.findByProdId(widget.id!);
+
+                await Get.to(
+                  UploadNewProductScreen(
+                    productModel: ProductModel(
+                      productId: getCurrProduct.productId,
+                      productTitle: getCurrProduct.productTitle,
+                      productPrice: getCurrProduct.productPrice,
+                      productDescription: getCurrProduct.productDescription,
+                      productImage: getCurrProduct.productImage,
+                      productCategory: getCurrProduct.productCategory,
+                      productQuantity: getCurrProduct.productQuantity,
+                    ),
+                  ),
+                );
                 // await Get.to(() => const ProductDetails(),
                 //     arguments: widget.id!);
               },

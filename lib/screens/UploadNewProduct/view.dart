@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:shop_smart/models/product_model.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 
@@ -9,13 +10,14 @@ import '../../controller/upload_new_product_controller.dart';
 import '../../widgets/pick_image_widget.dart';
 
 class UploadNewProductScreen extends StatelessWidget {
-  const UploadNewProductScreen({super.key});
+  const UploadNewProductScreen({super.key, this.productModel});
+  final ProductModel? productModel;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return GetBuilder<UploadNewProductController>(
-        init: UploadNewProductController(),
+    return GetBuilder<UploadOrEditProductController>(
+        init: UploadOrEditProductController(productModel: productModel),
         builder: (controller) {
           return Scaffold(
             bottomSheet: SizedBox(
@@ -71,7 +73,9 @@ class UploadNewProductScreen extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        controller.uploadProduct();
+                        controller.isEditing
+                            ? controller.uploadProduct()
+                            : controller.editProduct();
                       },
                     ),
                   ],
@@ -98,7 +102,9 @@ class UploadNewProductScreen extends StatelessWidget {
                         height: 20,
                       ),
                       /* Image picker here ***********************************/
-                      const PickImageWidget(),
+                      PickImageWidget(
+                        image: controller.image,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

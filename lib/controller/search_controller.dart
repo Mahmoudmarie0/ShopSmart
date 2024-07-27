@@ -7,6 +7,7 @@ import 'main_controller.dart';
 class SEarchController extends GetxController {
   TextEditingController searchController = TextEditingController();
   MainController mainController = Get.find();
+  // UploadOrEditProductController uploadOrEditProductController = Get.find();
   ViewedRecentlyController viewedRecentlyController = Get.find();
 
   @override

@@ -6,12 +6,14 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:shop_smart/controller/upload_new_product_controller.dart';
 
 class PickImageWidget extends StatelessWidget {
-  const PickImageWidget({super.key});
+  PickImageWidget({super.key, this.image});
+
+  String? image;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return GetBuilder<UploadNewProductController>(builder: (controller) {
+    return GetBuilder<UploadOrEditProductController>(builder: (controller) {
       return controller.pickedImage == null
           ? SizedBox(
               width: size.width * 0.4 + 10,

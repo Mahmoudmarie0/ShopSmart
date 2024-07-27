@@ -40,11 +40,11 @@ class MainController extends GetxController {
   Map<String, CartModel> get getCartItem => cartItem;
 
   ProductModel? findByProdId(String prodId) {
-    if (products.where((element) => element.productId == prodId).isEmpty) {
+    if (product.where((element) => element.productId == prodId).isEmpty) {
       return null;
     }
 
-    return products.firstWhere((element) => element.productId == prodId);
+    return product.firstWhere((element) => element.productId == prodId);
   }
 
   final productDB = FirebaseFirestore.instance.collection("products");
