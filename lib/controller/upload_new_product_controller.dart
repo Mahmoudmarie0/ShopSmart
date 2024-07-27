@@ -121,15 +121,14 @@ class UploadOrEditProductController extends GetxController {
       try {
         _isLoading = true;
         update();
-
+        final productID = const Uuid().v4();
         final ref = FirebaseStorage.instance
             .ref()
             .child("productsImages")
-            .child('${titleController.text.trim()}.jpg');
+            .child('$productID.jpg');
         await ref.putFile(File(pickedImage!.path));
         productNetworkImage = await ref.getDownloadURL();
 
-        final productID = const Uuid().v4();
         await FirebaseFirestore.instance
             .collection("products")
             .doc(productID)
@@ -226,7 +225,7 @@ class UploadOrEditProductController extends GetxController {
           final ref = FirebaseStorage.instance
               .ref()
               .child("productsImages")
-              .child('${titleController.text.trim()}.jpg');
+              .child('${productModel!.productId}.jpg');
           await ref.putFile(File(pickedImage!.path));
           productNetworkImage = await ref.getDownloadURL();
         }
