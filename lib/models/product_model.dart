@@ -23,7 +23,7 @@ class ProductModel {
   factory ProductModel.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return ProductModel(
-      productId: data['userId'],
+      productId: data['productId'],
       productTitle: data['productTitle'],
       productPrice: data['productPrice'],
       productCategory: data['productTitle'],

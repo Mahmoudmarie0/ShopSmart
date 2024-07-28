@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/cart_model.dart';
 import '../models/product_model.dart';
+import '../widgets/show_dialog_widget.dart';
 
 class MainController extends GetxController {
   static const THEME_STATUS = "THEME_STATUS";
@@ -14,6 +17,67 @@ class MainController extends GetxController {
   bool get getIsDarkTheme => _darkTheme;
   User? user = FirebaseAuth.instance.currentUser;
   List<ProductModel> products = [];
+
+  final auth = FirebaseAuth.instance;
+  final userDB = FirebaseFirestore.instance.collection("users");
+
+  Future<void> addToCartFirebase(
+      {required String productId,
+      required int quantity,
+      required BuildContext buildContext}) async {
+    final User? user = auth.currentUser;
+    if (user == null) {
+      ShowDialogWidget.showErrorORWarningDialog(
+          context: buildContext, subtitle: 'No user logged in', fct: () {});
+      return;
+    }
+
+    final uid = user.uid;
+    final cartId = const Uuid().v4();
+    try {
+      await userDB.doc(uid).update({
+        productId: FieldValue.arrayUnion([
+          {"cartId": cartId, "productId": productId, "quantity": quantity}
+        ])
+      });
+      await fetchCart();
+      Fluttertoast.showToast(
+        msg: "Item has been added to cart",
+      );
+    } catch (e) {
+      ShowDialogWidget.showErrorORWarningDialog(
+          context: buildContext, subtitle: e.toString(), fct: () {});
+    }
+  }
+
+  Future<void> fetchCart() async {
+    User? user = auth.currentUser;
+    if (user == null) {
+      cartItem.clear();
+      return;
+    }
+    try {
+      final userDoc = await userDB.doc(user.uid).get();
+      final data = userDoc.data();
+      if (data == null || !data.containsKey("userCart")) {
+        return;
+      }
+      final leng = userDoc.get("userCart").length;
+
+      for (int i = 0; i < leng; i++) {
+        cartItem.putIfAbsent(
+            userDoc.get("userCart")[i]["productId"],
+            () => CartModel(
+                cartId: userDoc.get("userCart")[i]["cartId"],
+                productId: userDoc.get("userCart")[i]["productId"],
+                quantity: userDoc.get("userCart")[i]["quantity"]));
+        update();
+      }
+    } catch (e) {
+      ShowDialogWidget.showErrorORWarningDialog(
+          context: Get.context!, subtitle: e.toString(), fct: () {});
+    }
+  }
 
   MainController() {
     //to save the theme value
@@ -282,5 +346,9 @@ class MainController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     fetchProducts();
+    fetchProductsAsStream();
+    getCartItem;
+
+    update();
   }
 }

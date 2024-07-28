@@ -74,7 +74,15 @@ class _LatestArrivalProductWidgetState
                                   productId: widget.id.toString(),
                                 ),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      controller.mainController
+                                          .addToCart(productId: widget.id!);
+                                      controller.mainController
+                                          .addToCartFirebase(
+                                              productId: widget.id!,
+                                              quantity: 1,
+                                              buildContext: context);
+                                    },
                                     icon: const Icon(
                                       Icons.add_shopping_cart_rounded,
                                       size: 18,

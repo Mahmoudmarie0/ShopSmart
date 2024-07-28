@@ -96,10 +96,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: SizedBox(
                                     height: kBottomNavigationBarHeight - 10,
                                     child: ElevatedButton.icon(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         controller.mainController
                                             .addToCart(productId: productId);
-                                        controller.update();
+                                        await controller.mainController
+                                            .addToCartFirebase(
+                                                productId: productId,
+                                                quantity: 1,
+                                                buildContext: context);
                                       },
                                       label: Text(
                                         controller.mainController

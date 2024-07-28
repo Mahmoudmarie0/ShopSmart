@@ -86,9 +86,14 @@ class _ProductWidgetState extends State<ProductWidget> {
                             color: Colors.lightBlue,
                             child: InkWell(
                               borderRadius: BorderRadius.circular(16),
-                              onTap: () {
+                              onTap: () async {
                                 controller.mainController
                                     .addToCart(productId: widget.id!);
+                                controller.mainController.addToCartFirebase(
+                                    productId: widget.id!,
+                                    quantity: 1,
+                                    buildContext: context);
+
                                 controller.update();
                               },
                               child: Padding(

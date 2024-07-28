@@ -15,7 +15,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CartController cartController = Get.find();
-    return cartController.mainController.getCartItem.isEmpty
+    return cartController.mainController.cartItem.isEmpty
         ? Scaffold(
             body: EmptyBagWidget(
             imagePath: AssetsPaths.shoppingBasket,
@@ -32,7 +32,7 @@ class CartScreen extends StatelessWidget {
                 appBar: AppBar(
                   title: TitleTextWidget(
                     label:
-                        "Cart (${controller.mainController.getCartItem.length})",
+                        "Cart (${controller.mainController.cartItem.length})",
                   ),
                   leading: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -59,12 +59,11 @@ class CartScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                          itemCount:
-                              controller.mainController.getCartItem.length,
+                          itemCount: controller.mainController.cartItem.length,
                           itemBuilder: (context, index) {
                             return CartWidget(
                               cartModel: controller
-                                  .mainController.getCartItem.values
+                                  .mainController.cartItem.values
                                   .toList()
                                   .reversed
                                   .toList()[index],
