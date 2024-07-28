@@ -52,7 +52,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                               context: context,
                               subtitle: "Remove all item from wishlist?",
                               isError: false,
-                              fct: () {
+                              fct: () async {
+                                await controller.clearWishListFromFirebase();
                                 controller.clearWishList();
                               });
                         },

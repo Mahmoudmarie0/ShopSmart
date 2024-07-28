@@ -36,7 +36,7 @@ class MainController extends GetxController {
     final cartId = const Uuid().v4();
     try {
       await userDB.doc(uid).update({
-        productId: FieldValue.arrayUnion([
+        'userCart': FieldValue.arrayUnion([
           {"cartId": cartId, "productId": productId, "quantity": quantity}
         ])
       });
