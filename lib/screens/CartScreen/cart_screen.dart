@@ -45,8 +45,8 @@ class CartScreen extends StatelessWidget {
                               context: context,
                               subtitle: "Remove all item from cart?",
                               isError: false,
-                              fct: () {
-                                cartController.clearCart();
+                              fct: () async {
+                                await cartController.clearCartFromFirebase();
                               });
                         },
                         icon: const Icon(

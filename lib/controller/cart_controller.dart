@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:shop_smart/models/cart_model.dart';
+import '../widgets/show_dialog_widget.dart';
 import 'main_controller.dart';
 
 class CartController extends GetxController {
@@ -38,6 +41,44 @@ class CartController extends GetxController {
   void clearCart() {
     mainController.cartItem.clear();
     update();
+  }
+
+  Future<void> clearCartFromFirebase() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return;
+    }
+    try {
+      await mainController.userDB.doc(user.uid).update({"userCart": []});
+      mainController.cartItem.clear();
+      update();
+    } catch (e) {
+      ShowDialogWidget.showErrorORWarningDialog(
+          context: Get.context!, subtitle: e.toString(), fct: () {});
+    }
+  }
+
+  Future<void> removeCartItemFromFirebase(
+      {required String cartId,
+      required String productId,
+      required int quantity}) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return;
+    }
+    try {
+      await mainController.userDB.doc(user.uid).update({
+        "userCart": FieldValue.arrayRemove([
+          {"cartId": cartId, "productId": productId, "quantity": quantity}
+        ])
+      });
+      mainController.cartItem.remove(productId);
+      await mainController.fetchCart();
+      update();
+    } catch (e) {
+      ShowDialogWidget.showErrorORWarningDialog(
+          context: Get.context!, subtitle: e.toString(), fct: () {});
+    }
   }
 
   int getQtyuantity() {
