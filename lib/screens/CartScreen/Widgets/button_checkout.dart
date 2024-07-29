@@ -6,7 +6,8 @@ import 'package:shop_smart/widgets/title_text.dart';
 import '../../../controller/cart_controller.dart';
 
 class CartButtonCheckout extends StatelessWidget {
-  const CartButtonCheckout({super.key});
+  const CartButtonCheckout({super.key, required this.function});
+  final Function function;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,9 @@ class CartButtonCheckout extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(0)),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await function();
+                      },
                       child: const Text(
                         "Checkout",
                         style: TextStyle(color: Colors.white),

@@ -5,7 +5,6 @@ import 'package:shop_smart/consts/assets.dart';
 import 'package:shop_smart/controller/wishlist_controller.dart';
 import 'package:shop_smart/widgets/empty_bag.dart';
 import 'package:shop_smart/widgets/title_text.dart';
-
 import '../../widgets/show_dialog_widget.dart';
 import '../SearchScreen/Widgets/products_widget.dart';
 

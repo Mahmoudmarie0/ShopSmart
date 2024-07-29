@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shop_smart/consts/assets.dart';
 import 'package:shop_smart/screens/CartScreen/Widgets/button_checkout.dart';
 import 'package:shop_smart/widgets/empty_bag.dart';
+import 'package:shop_smart/widgets/loading_manager.dart';
 import 'package:shop_smart/widgets/title_text.dart';
 import '../../controller/cart_controller.dart';
 import '../../widgets/show_dialog_widget.dart';
@@ -28,7 +29,9 @@ class CartScreen extends StatelessWidget {
             init: CartController(),
             builder: (controller) {
               return Scaffold(
-                bottomSheet: const CartButtonCheckout(),
+                bottomSheet: CartButtonCheckout(function: () async {
+                  await controller.placeOrder();
+                }),
                 appBar: AppBar(
                   title: TitleTextWidget(
                     label:
@@ -55,25 +58,29 @@ class CartScreen extends StatelessWidget {
                         ))
                   ],
                 ),
-                body: Column(
-                  children: [
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: controller.mainController.cartItem.length,
-                          itemBuilder: (context, index) {
-                            return CartWidget(
-                              cartModel: controller
-                                  .mainController.cartItem.values
-                                  .toList()
-                                  .reversed
-                                  .toList()[index],
-                            );
-                          }),
-                    ),
-                    const SizedBox(
-                      height: kBottomNavigationBarHeight + 10,
-                    )
-                  ],
+                body: LoadingManager(
+                  isLoading: controller.isLoading,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount:
+                                controller.mainController.cartItem.length,
+                            itemBuilder: (context, index) {
+                              return CartWidget(
+                                cartModel: controller
+                                    .mainController.cartItem.values
+                                    .toList()
+                                    .reversed
+                                    .toList()[index],
+                              );
+                            }),
+                      ),
+                      const SizedBox(
+                        height: kBottomNavigationBarHeight + 10,
+                      )
+                    ],
+                  ),
                 ),
               );
             });
