@@ -1,11 +1,12 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_smart/widgets/subtitle_text.dart';
-import '../../../consts/assets.dart';
+import '../../../models/order_model.dart';
 import '../../../widgets/title_text.dart';
 
 class OrdersWidget extends StatefulWidget {
-  const OrdersWidget({super.key});
+  const OrdersWidget({super.key, required this.ordersModelAdvanced});
+  final OrdersModelAdvanced ordersModelAdvanced;
 
   @override
   State<OrdersWidget> createState() => _OrdersWidgetFreeState();
@@ -25,7 +26,7 @@ class _OrdersWidgetFreeState extends State<OrdersWidget> {
             child: FancyShimmerImage(
               height: size.width * 0.25,
               width: size.width * 0.25,
-              imageUrl: AssetsPaths.productImageUrl,
+              imageUrl: widget.ordersModelAdvanced.imageUrl,
             ),
           ),
           Flexible(
@@ -37,9 +38,9 @@ class _OrdersWidgetFreeState extends State<OrdersWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Flexible(
+                      Flexible(
                         child: TitleTextWidget(
-                          label: 'productTitle',
+                          label: widget.ordersModelAdvanced.productTitle,
                           maxLines: 2,
                           fontSize: 15,
                         ),
@@ -53,15 +54,15 @@ class _OrdersWidgetFreeState extends State<OrdersWidget> {
                           )),
                     ],
                   ),
-                  const Row(
+                  Row(
                     children: [
-                      TitleTextWidget(
+                      const TitleTextWidget(
                         label: 'Price:  ',
                         fontSize: 15,
                       ),
                       Flexible(
                         child: SubtitleTextWidget(
-                          label: "11.99 \$",
+                          label: "${widget.ordersModelAdvanced.price} \$",
                           fontSize: 15,
                           color: Colors.blue,
                           textDecorations: TextDecoration.none,
@@ -72,8 +73,8 @@ class _OrdersWidgetFreeState extends State<OrdersWidget> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const SubtitleTextWidget(
-                    label: "Qty: 10",
+                  SubtitleTextWidget(
+                    label: "Qty: ${widget.ordersModelAdvanced.quantity}",
                     fontSize: 15,
                     textDecorations: TextDecoration.none,
                   ),

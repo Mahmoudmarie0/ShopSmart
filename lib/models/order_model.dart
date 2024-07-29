@@ -6,7 +6,7 @@ class OrdersModelAdvanced with ChangeNotifier {
   final String userId;
   final String productId;
   final String productTitle;
-  final String userName;
+  // final String userName;
   final String price;
   final String imageUrl;
   final String quantity;
@@ -17,7 +17,7 @@ class OrdersModelAdvanced with ChangeNotifier {
       required this.userId,
       required this.productId,
       required this.productTitle,
-      required this.userName,
+      // required this.userName,
       required this.price,
       required this.imageUrl,
       required this.quantity,

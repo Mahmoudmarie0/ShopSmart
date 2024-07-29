@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:shop_smart/controller/profile_controller.dart';
 import 'package:shop_smart/models/cart_model.dart';
 import 'package:uuid/uuid.dart';
 import '../widgets/show_dialog_widget.dart';
@@ -8,6 +9,7 @@ import 'main_controller.dart';
 
 class CartController extends GetxController {
   MainController mainController = Get.find();
+  ProfileController profileController = Get.put(ProfileController());
   bool isLoading = false;
 
   void changeQuantity({required String productId, required int quantity}) {
@@ -106,7 +108,7 @@ class CartController extends GetxController {
         final getCurrProduct = mainController.findByProdId(value.productId);
         final orderId = const Uuid().v4();
         await FirebaseFirestore.instance
-            .collection("orders.Advanced")
+            .collection("ordersAdvanced")
             .doc(orderId)
             .set({
           "orderId": orderId,
@@ -118,7 +120,7 @@ class CartController extends GetxController {
               double.parse(getCurrProduct.productPrice) * value.quantity,
           "quantity": value.quantity,
           "imageUrl": getCurrProduct.productImage,
-          "userName": user.displayName,
+          //"userName": profileController.userModel?.userName,
           "orderDate": Timestamp.now(),
         });
         clearCart();
